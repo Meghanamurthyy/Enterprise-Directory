@@ -165,19 +165,24 @@ class EmployeeController {
   // Get employee by teid
   public getEmployeeByTeid: RequestHandler = async (req: Request, res: Response): Promise<void> => {
     try {
-      const { te_id } = req.params;
-      
-      const database = await initializeDB();  // Ensure db is resolved first
-      // Fetch the employee
-      const query = 'SELECT * FROM Employees WHERE TE_ID = ?'
-      const row = await database.get(query, [te_id]);
+        const { te_id } = req.params;
 
-      res.json(row);
+        const database = await initializeDB();  // Ensure db is resolved first
+        // Fetch the employee
+        const query = 'SELECT * FROM Employees WHERE TE_ID = ?';
+        const row = await database.get(query, [te_id]);
+
+        if (row) {
+            res.json(row);
+        } else {
+            res.status(404).json({ message: 'Invalid TE_ID. Employee not found.' });
+        }
     } catch (error) {
-      console.error('Error in getEmployeeByTeid:', error);
-      res.status(500).json({ message: 'Internal Server Error', error });
+        console.error('Error in getEmployeeByTeid:', error);
+        res.status(500).json({ message: 'Internal Server Error', error });
     }
 };
+
 
   // Update an employee
   public updateEmployee: RequestHandler = async (req: Request, res: Response): Promise<void> => {
