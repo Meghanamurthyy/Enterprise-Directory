@@ -203,19 +203,19 @@ class ProgramController {
   // Create a new program
   public createProgram: RequestHandler = async (req: Request, res: Response): Promise<void> => {
     try {
-      const { program_name, program_description } = req.body; // Use snake_case for consistency with DB
+      const { program_name, program_description, start_date, end_date } = req.body;
 
-      if (!program_name) {
-        res.status(400).json({ message: 'program_name is required' });
+      if (!program_name || !start_date || !end_date) {
+        res.status(400).json({ message: 'program_name, start_date, and end_date are required' });
         return;
       }
 
       const db = await initializeDB(); // Initialize the database connection
 
-      // Prepare and run insert query
+      // Prepare and run insert query with all required fields
       const result = await db.run(
-        'INSERT INTO Programs (program_name, program_description) VALUES (?, ?)',
-        [program_name, program_description || null]
+        'INSERT INTO Programs (program_name, program_description, start_date, end_date) VALUES (?, ?, ?, ?)',
+        [program_name, program_description || null, start_date, end_date]
       );
 
       res.status(201).json({ message: 'Program created successfully', program_id: result.lastID });
@@ -223,7 +223,7 @@ class ProgramController {
       console.error('Error creating program:', error);
       res.status(500).json({ message: 'Internal Server Error', error });
     }
-  };
+};
 
   // Assign an employee to a program
   public assignEmployeeToProgram: RequestHandler = async (req: Request, res: Response): Promise<void> => {
