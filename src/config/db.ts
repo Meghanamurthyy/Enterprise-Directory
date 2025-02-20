@@ -15,16 +15,21 @@ const pool = new Pool({
 export default pool;
 */
 import sqlite3 from 'sqlite3';
-import { open } from 'sqlite';
+import { open, Database } from 'sqlite';
+
+let dbInstance: Database | null = null; // Store the database instance
 
 async function initializeDb() {
-    const db = await open({
-        filename: 'C:/Users/megha/Downloads/enterprise_directory.db', // Ensure this path is correct
-        driver: sqlite3.Database,
-    });
-
-    return db;
+    if (!dbInstance) {
+        dbInstance = await open({
+            filename: 'C:/Users/megha/Downloads/enterprise_directory.db', // Ensure the path is correct
+            driver: sqlite3.Database,
+        });
+        console.log(' Database connected!');
+    }
+    return dbInstance;
 }
 
 export default initializeDb;
+
 

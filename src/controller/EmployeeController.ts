@@ -149,12 +149,13 @@ class EmployeeController {
   // Get all employees with pagination
   public getAllEmployees: RequestHandler = async (req: Request, res: Response): Promise<void> => {
     try {
-        const database = await initializeDB();  // Ensure DB is resolved first
+        // const database = await initializeDB();  // Ensure DB is resolved first
+        const db = (req as any).db; 
 
         // Fetch all employees
-        const rows = await database.all('SELECT * FROM Employees'); 
+        const rows = await db.all('SELECT * FROM Employees'); 
 
-        res.json(rows); // Send all employees as a JSON response
+        res.status(200).json(rows); // Send all employees as a JSON response
     } catch (error) {
         console.error('Error fetching all employees:', error);
         res.status(500).json({ message: 'Internal Server Error', error });
@@ -167,13 +168,15 @@ class EmployeeController {
     try {
         const { te_id } = req.params;
 
-        const database = await initializeDB();  // Ensure db is resolved first
+        // const database = await initializeDB();  // Ensure db is resolved first
+      const db = (req as any).db; 
+
         // Fetch the employee
         const query = 'SELECT * FROM Employees WHERE TE_ID = ?';
-        const row = await database.get(query, [te_id]);
+        const row = await db.get(query, [te_id]);
 
         if (row) {
-            res.json(row);
+            res.status(200).json(row);
         } else {
             res.status(404).json({ message: 'Invalid TE_ID. Employee not found.' });
         }
@@ -208,15 +211,16 @@ class EmployeeController {
       updates.push(teid);
       const query = `UPDATE employees SET ${setFields.join(', ')} WHERE TE_ID = ?`;
 
-      const database = await initializeDB();  // Ensure db is resolved first
-      const result = await database.run(query, updates);
+      // const database = await initializeDB();  // Ensure db is resolved first
+      const db = (req as any).db; 
+      const result = await db.run(query, updates);
 
       if (result.changes === 0) {
         res.status(404).json({ message: 'Employee not found' });
         return;
       }
 
-      res.json({ message: 'Employee updated successfully' });
+      res.status(200).json({ message: 'Employee updated successfully' });
     } catch (error) {
       console.error('Error updating employee:', error);
       res.status(500).json({ message: 'Internal Server Error', error });

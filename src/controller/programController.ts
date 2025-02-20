@@ -203,22 +203,23 @@ class ProgramController {
   // Create a new program
   public createProgram: RequestHandler = async (req: Request, res: Response): Promise<void> => {
     try {
-      const { program_name, program_description, start_date, end_date } = req.body;
+      const { program_id,program_name, program_description, start_date, end_date } = req.body;
 
-      if (!program_name || !start_date || !end_date) {
+      if (!program_id || !program_name) {
         res.status(400).json({ message: 'program_name, start_date, and end_date are required' });
         return;
       }
 
-      const db = await initializeDB(); // Initialize the database connection
+      // const db = await initializeDB(); // Initialize the database connection
+      const db = (req as any).db; // Get the DB instance from the request
 
       // Prepare and run insert query with all required fields
       const result = await db.run(
-        'INSERT INTO Programs (program_name, program_description, start_date, end_date) VALUES (?, ?, ?, ?)',
-        [program_name, program_description || null, start_date, end_date]
+        'INSERT INTO Programs (program_id,program_name, program_description, start_date, end_date) VALUES (?,?, ?, ?, ?)',
+        [program_id,program_name, program_description || null, start_date || null, end_date || null]
       );
 
-      res.status(201).json({ message: 'Program created successfully', program_id: result.lastID });
+      res.status(201).json({ message: 'Program created successfully', program_id });
     } catch (error) {
       console.error('Error creating program:', error);
       res.status(500).json({ message: 'Internal Server Error', error });
@@ -235,7 +236,8 @@ class ProgramController {
         return;
       }
 
-      const db = await initializeDB();
+      // const db = await initializeDB();
+      const db = (req as any).db; // Get the DB instance from the request
 
       // Fetch program ID
       const program = await db.get('SELECT program_id FROM Programs WHERE program_name = ?', [program_name]);
@@ -291,7 +293,7 @@ class ProgramController {
         return;
       }
 
-      res.json({ message: 'Employee program updated successfully' });
+      res.status(200).json({ message: 'Employee program updated successfully' });
     } catch (error) {
       console.error('Error updating employee program:', error);
       res.status(500).json({ message: 'Internal Server Error', error });
@@ -309,20 +311,21 @@ class ProgramController {
             return;
         }
 
-        console.log('🔹 Received program_name:', program_name);
+        // console.log('🔹 Received program_name:', program_name);
 
-        const db = await initializeDB();
+        // const db = await initializeDB();
+        const db = (req as any).db; // Get the DB instance from the request
 
         // Fetch program ID
         const program = await db.get('SELECT program_id FROM Programs WHERE LOWER(program_name) = LOWER(?)', [program_name]);
 
         if (!program) {
-            console.log('❌ Program not found:', program_name);
+            console.log(' Program not found:', program_name);
             res.status(404).json({ message: 'Program not found' });
             return;
         }
 
-        console.log('✅ Found program:', program);
+       
 
         // Fetch employees assigned to this program
         const employees = await db.all(
@@ -334,16 +337,16 @@ class ProgramController {
         );
 
         if (employees.length === 0) {
-            console.log('⚠️ No employees found for the program:', program_name);
-            res.status(200).json({ message: 'No employees found', employees: [] });
+            console.log(' No employees found for the program:', program_name);
+            res.status(404).json({ message: 'No employees found for this program'});
             return;
         }
 
-        console.log('✅ Fetched employees:', employees);
+        // console.log('Fetched employees:', employees);
 
         res.status(200).json({ message: 'Employees found', employees });
     } catch (error) {
-        console.error('❌ Error fetching employees by program:', error);
+        console.error('Error fetching employees by program:', error);
         res.status(500).json({ message: 'Internal Server Error', error });
     }
 };

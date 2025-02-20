@@ -26,17 +26,17 @@ import ProgramController from '../controller/programController';  // Adjust path
 const router = express.Router();
 
 // Route to create a new program
-router.post('/create', ProgramController.createProgram);
+router.post('/createProgram', ProgramController.createProgram);
 
 // Route to assign an employee to a program
-router.post('/assign', ProgramController.assignEmployeeToProgram);
+router.post('/assignEmployeeToProgram', ProgramController.assignEmployeeToProgram);
 
 // Route to update employee's program details
-router.put('/update', ProgramController.updateEmployeeProgram);
+router.put('/updateEmployeeProgram', ProgramController.updateEmployeeProgram);
 
 
 
 // Route to get employees by program
-router.get('/getEmployees/:program_name', ProgramController.getEmployeesByProgram);
+router.get('/getEmployeesByProgramName/:program_name', ProgramController.getEmployeesByProgram);
 
 export default router;
