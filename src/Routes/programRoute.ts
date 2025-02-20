@@ -34,8 +34,7 @@ router.post('/assign', ProgramController.assignEmployeeToProgram);
 // Route to update employee's program details
 router.put('/update', ProgramController.updateEmployeeProgram);
 
-// Route to remove an employee from a program
-router.delete('/remove', ProgramController.removeEmployeeFromProgram);
+
 
 // Route to get employees by program
 router.get('/getEmployees/:program_name', ProgramController.getEmployeesByProgram);

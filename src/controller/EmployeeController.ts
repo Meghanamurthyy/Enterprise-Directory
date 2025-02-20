@@ -223,25 +223,6 @@ class EmployeeController {
     }
   };
 
-  // Delete an employee
-  public deleteEmployee: RequestHandler = async (req: Request, res: Response): Promise<void> => {
-    try {
-      const { teid } = req.params;
-
-      const database = await initializeDB();  // Ensure db is resolved first
-      const result = await database.run('DELETE FROM Employees WHERE TE_ID = ?', [teid]);
-
-      if (result.changes === 0) {
-        res.status(404).json({ message: 'Employee not found' });
-        return;
-      }
-
-      res.json({ message: 'Employee deleted successfully' });
-    } catch (error) {
-      console.error('Error deleting employee:', error);
-      res.status(500).json({ message: 'Internal Server Error', error });
-    }
-  };
 }
 
 export default new EmployeeController();

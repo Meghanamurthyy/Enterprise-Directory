@@ -18,7 +18,7 @@ const router = Router();
 router.get('/', EmployeeController.getAllEmployees);
 router.get('/:te_id', EmployeeController.getEmployeeByTeid);
 router.put('/:teid', EmployeeController.updateEmployee);
-router.delete('/:teid', EmployeeController.deleteEmployee);
+
 
 export default router;
 

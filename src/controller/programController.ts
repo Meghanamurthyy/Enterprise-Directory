@@ -298,42 +298,7 @@ class ProgramController {
     }
   };
 
-  // Remove an employee from a program
-  public removeEmployeeFromProgram: RequestHandler = async (req: Request, res: Response): Promise<void> => {
-    try {
-      const { TE_ID, program_name } = req.body;
-
-      if (!TE_ID || !program_name) {
-        res.status(400).json({ message: 'TE_ID and program_name are required' });
-        return;
-      }
-
-      const db = await initializeDB();
-
-      // Fetch program ID
-      const program = await db.get('SELECT program_id FROM Programs WHERE program_name = ?', [program_name]);
-      if (!program) {
-        res.status(404).json({ message: 'Program not found' });
-        return;
-      }
-
-      // Delete employee-program mapping
-      const result = await db.run(
-        'DELETE FROM Employee_Programs WHERE TE_ID = ? AND program_id = ?',
-        [TE_ID, program.program_id]
-      );
-
-      if (result.changes === 0) {
-        res.status(404).json({ message: 'Employee not assigned to this program' });
-        return;
-      }
-
-      res.json({ message: 'Employee removed from program successfully' });
-    } catch (error) {
-      console.error('Error removing employee from program:', error);
-      res.status(500).json({ message: 'Internal Server Error', error });
-    }
-  };
+  
 
   // Get employees by program
   public getEmployeesByProgram: RequestHandler = async (req: Request, res: Response): Promise<void> => {
