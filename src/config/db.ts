@@ -22,7 +22,7 @@ let dbInstance: Database | null = null; // Store the database instance
 async function initializeDb() {
     if (!dbInstance) {
         dbInstance = await open({
-            filename: 'C:/Users/megha/Downloads/enterprise_directory.db', // Ensure the path is correct
+            filename: "C:\\Users\\NIKHIL\\Downloads\\enterprise_directory.db", // Ensure the path is correct
             driver: sqlite3.Database,
         });
         console.log(' Database connected!');

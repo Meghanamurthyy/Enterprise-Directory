@@ -42,10 +42,13 @@ const PORT = process.env.PORT || 4590;
 
 app.use(express.json());
 
-let dbInstance: any; // Store the DB instance globally
+let dbInstance: any = null;// Store the DB instance globally
 
 initializeDB()
-  .then(() => console.log('Database initialized'))
+  .then((db) => {
+    dbInstance = db;
+    console.log('Database initialized');
+  })
   .catch((err) => {
     console.error('Database initialization failed:', err);
     process.exit(1); // Exit if DB connection fails
