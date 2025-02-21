@@ -1,0 +1,75 @@
+/* General Page Styling */
+.intern-list-container {
+    max-width: 900px;
+    margin: auto;
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f8f8; /* 🌿 Very Light Teal */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Title Styling */
+h2 {
+    text-align: center;
+    color: #ff944d; /* 🍊 Soft Orange */
+    font-size: 28px;
+    margin-bottom: 30px; /* Bigger Space Below Title */
+}
+
+/* Intern Card */
+.intern-card {
+    display: flex;
+    align-items: flex-start;
+    background-color: #fef6f0; /* 🍑 Very Light Orange */
+    padding: 25px;  /* Bigger Padding for Better Spacing */
+    border-radius: 10px;
+    margin-bottom: 25px;  /* Bigger Space Between Each Intern Card */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+}
+
+.intern-card:hover {
+    transform: translateY(-3px);
+}
+
+/* Intern Info */
+.intern-info {
+    flex-grow: 1;
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* MUCH BIGGER SPACE Between ID, Name, Program, Expertise, SME */
+}
+
+/* Intern Details Styling */
+.intern-detail {
+    font-size: 18px;
+    color: #333;
+    font-weight: 500;
+}
+
+.intern-label {
+    font-weight: bold;
+    color: #ff944d; /* 🍊 Soft Orange */
+    font-size: 18px;
+}
+
+/* Add Intern Button */
+.add-intern-btn {
+    display: block;
+    width: fit-content;
+    margin: 30px auto; /* More Space Above Add Button */
+    background-color: #66c2c2; /* 🌿 Light Teal */
+    color: white;
+    border: none;
+    padding: 15px 25px;  /* Bigger Button */
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;  /* Bigger Font */
+    transition: background-color 0.3s ease-in-out;
+}
+
+.add-intern-btn:hover {
+    background-color: #52a2a2;
+}

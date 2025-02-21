@@ -1,0 +1,13 @@
+<!-- <app-navbar></app-navbar> -->
+
+<div class="container">
+  <h2>Manager List</h2>
+  <div *ngFor="let manager of managers" class="manager-card">
+    <img [src]="manager.photo" alt="Manager Photo">
+    <h3>{{ manager.name }}</h3>
+    <p>Interns: {{ manager.interns.join(', ') }}</p>
+    <button (click)="viewInterns(manager.id)">View Interns</button>
+    <button>Edit</button>
+  </div>
+</div>
+<!-- <h1>Manager List Page Loaded</h1> -->

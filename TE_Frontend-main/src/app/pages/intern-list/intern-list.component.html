@@ -1,0 +1,22 @@
+<!-- <app-navbar></app-navbar> -->
+<h1>Intern List</h1>
+<div class="container">
+  <h2>Interns</h2>
+  <table>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Program</th>
+      <th>Expertise</th>
+      <th>SME</th>
+    </tr>
+    <tr *ngFor="let intern of interns">
+      <td>{{ intern.id }}</td>
+      <td>{{ intern.name }}</td>
+      <td>{{ intern.program }}</td>
+      <td>{{ intern.expertise }}</td>
+      <td>{{ intern.sme }}</td>
+    </tr>
+  </table>
+  <button (click)="addIntern()">Add Intern</button>
+</div>

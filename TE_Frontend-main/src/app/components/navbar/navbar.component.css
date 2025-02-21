@@ -1,0 +1,42 @@
+/* Navbar Styling */
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 30px;
+    background-color: #ff944d; /* 🍊 Soft Orange */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Logo Styling */
+.logo-container {
+    display: flex;
+    align-items: center;
+}
+
+.company-logo {
+    width: 120px;  /* Adjust size */
+    height: auto;  /* Maintain aspect ratio */
+    max-height: 50px; /* Keep it small */
+}
+
+/* Search Bar */
+.search-bar {
+    width: 300px;
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #66c2c2; /* 🌿 Light Teal */
+    border-radius: 5px;
+    outline: none;
+}
+
+.search-bar:focus {
+    border-color: #52a2a2;
+}
+
+/* Account Section */
+.account {
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+}
