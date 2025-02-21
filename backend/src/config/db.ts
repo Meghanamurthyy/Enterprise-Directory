@@ -16,13 +16,22 @@ export default pool;
 */
 import sqlite3 from 'sqlite3';
 import { open, Database } from 'sqlite';
+import path from 'path';
 
 let dbInstance: Database | null = null; // Store the database instance
 
 async function initializeDb() {
     if (!dbInstance) {
+
+       // Move up three levels to reach the root folder (from backend/src/config to API-BACKEND)
+        const rootDir = path.resolve(__dirname, '..', '..', '..');
+
+        // Resolve the SQLite file path dynamically
+        const dbPath = process.env.DB_PATH
+            ? path.resolve(rootDir, process.env.DB_PATH) // Use .env if set
+            : path.resolve(rootDir, 'data-import-utility/src/enterprise_directory.sqlite'); // Default path
         dbInstance = await open({
-            filename: "C:\\Users\\NIKHIL\\Downloads\\API-BACKEND\\data-import-utility\\src\\enterprise_directory.sqlite", // Ensure the path is correct
+            filename: dbPath, // Ensure the path is correct
             driver: sqlite3.Database,
         });
         console.log(' Database connected!');
