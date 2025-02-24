@@ -30,6 +30,7 @@ async function initializeDb() {
         const dbPath = process.env.DB_PATH
             ? path.resolve(rootDir, process.env.DB_PATH) // Use .env if set
             : path.resolve(rootDir, 'data-import-utility/src/enterprise_directory.sqlite'); // Default path
+            
         dbInstance = await open({
             filename: dbPath, // Ensure the path is correct
             driver: sqlite3.Database,

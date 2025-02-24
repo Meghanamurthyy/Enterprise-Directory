@@ -32,17 +32,27 @@ app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
 });
 */
-import express, { Request, Response , NextFunction} from 'express';
-import initializeDB from './config/db'; // Assuming db initialization function
-import employeeRoute from './Routes/employeeRoute'; // Assuming you have an employeeRoute file
+import express, { Request, Response, NextFunction } from 'express';
+import cors from 'cors';
+import initializeDB from './config/db';
+import employeeRoute from './Routes/employeeRoute';
 import programRoute from './Routes/programRoute';
 
 const app = express();
 const PORT = process.env.PORT || 4590;
 
+
+app.use(
+  cors({
+    origin: '*', // Allow all origins
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allow all HTTP methods
+    allowedHeaders: ['Content-Type', 'Authorization'], // Allow common headers
+  })
+);
+
 app.use(express.json());
 
-let dbInstance: any = null;// Store the DB instance globally
+let dbInstance: any = null;
 
 initializeDB()
   .then((db) => {
@@ -51,23 +61,21 @@ initializeDB()
   })
   .catch((err) => {
     console.error('Database initialization failed:', err);
-    process.exit(1); // Exit if DB connection fails
+    process.exit(1);
   });
 
-  // Middleware to attach DB instance to requests
+// Middleware to attach DB instance to requests
 app.use((req: Request, res: Response, next: NextFunction): void => {
   if (!dbInstance) {
     res.status(500).json({ message: 'Database not initialized' });
     return;
   }
-  (req as any).db = dbInstance; // Attach DB instance to `req`
-  next(); // Make sure to call next() to proceed to next middleware
+  (req as any).db = dbInstance;
+  next();
 });
 
 app.use('/api/programs', programRoute);
-app.use('/api/employees', employeeRoute);  // Make sure this is correctly added
-
-
+app.use('/api/employees', employeeRoute);
 
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
