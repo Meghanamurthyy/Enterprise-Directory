@@ -163,23 +163,41 @@ class EmployeeController {
 };
 
 
-  // Get employee by teid
-  public getEmployeeByTeid: RequestHandler = async (req: Request, res: Response): Promise<void> => {
+public getEmployeeByTeid: RequestHandler = async (req: Request, res: Response): Promise<void> => {
     try {
         const { te_id } = req.params;
+        const db = (req as any).db;
 
-        // const database = await initializeDB();  // Ensure db is resolved first
-      const db = (req as any).db; 
+        // Fetch employee details
+        const employeeQuery = `
+            SELECT TE_ID, first_name, last_name, email, phone_number, date_of_joining, manager_id
+            FROM Employees 
+            WHERE TE_ID = ?;
+        `;
+        const employee = await db.get(employeeQuery, [te_id]);
 
-        // Fetch the employee
-        const query = 'SELECT * FROM Employees WHERE TE_ID = ?';
-        const row = await db.get(query, [te_id]);
-
-        if (row) {
-            res.status(200).json(row);
-        } else {
+        if (!employee) {
             res.status(404).json({ message: 'Invalid TE_ID. Employee not found.' });
+            return;
         }
+
+        // Fetch associated programs
+        const programsQuery = `
+            SELECT ep.program_id, ep.expertise_area, ep.sme_status, 
+                   p.program_name, p.program_description, p.start_date, p.end_date
+            FROM Employee_Programs ep
+            JOIN Programs p ON ep.program_id = p.program_id
+            WHERE ep.TE_ID = ?;
+        `;
+        const programs = await db.all(programsQuery, [te_id]);
+
+        // Structure the response
+        const response = {
+            ...employee,  // Employee details
+            programs: programs.length > 0 ? programs : undefined  // Include only if programs exist
+        };
+
+        res.status(200).json(response);
     } catch (error) {
         console.error('Error in getEmployeeByTeid:', error);
         res.status(500).json({ message: 'Internal Server Error', error });
@@ -190,7 +208,7 @@ class EmployeeController {
   // Update an employee
   public updateEmployee: RequestHandler = async (req: Request, res: Response): Promise<void> => {
     try {
-      const { teid } = req.params;
+      const { te_id } = req.params;
       const { first_name, last_name, email, phone_number, date_of_joining, manager_id } = req.body;
 
       const updates: any[] = [];
@@ -208,7 +226,7 @@ class EmployeeController {
         return;
       }
 
-      updates.push(teid);
+      updates.push(te_id);
       const query = `UPDATE employees SET ${setFields.join(', ')} WHERE TE_ID = ?`;
 
       // const database = await initializeDB();  // Ensure db is resolved first
@@ -223,6 +241,38 @@ class EmployeeController {
       res.status(200).json({ message: 'Employee updated successfully' });
     } catch (error) {
       console.error('Error updating employee:', error);
+      res.status(500).json({ message: 'Internal Server Error', error });
+    }
+  };
+
+   // Get unique employee managers
+  public getEmployeeManagers: RequestHandler = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const db = (req as any).db;
+        const query = `SELECT DISTINCT manager_id FROM Employees WHERE manager_id IS NOT NULL`;
+        const rows = await db.all(query);
+        res.status(200).json(rows);
+    } catch (error) {
+        console.error('Error fetching employee managers:', error);
+        res.status(500).json({ message: 'Internal Server Error', error });
+    }
+  };
+   // Get employees by manager ID
+  public getEmployeeByManagerId: RequestHandler = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const { manager_id } = req.params;
+      const db = (req as any).db;
+      const query = 'SELECT * FROM Employees WHERE manager_id = ?';
+      const rows = await db.all(query, [manager_id]);
+
+      if (rows.length === 0) {
+        res.status(404).json({ message: 'No employees found for this manager ID' });
+        return;
+      }
+
+      res.status(200).json(rows);
+    } catch (error) {
+      console.error('Error fetching employees by manager ID:', error);
       res.status(500).json({ message: 'Internal Server Error', error });
     }
   };

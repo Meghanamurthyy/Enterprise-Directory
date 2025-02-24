@@ -17,7 +17,11 @@ const router = Router();
 
 router.get('/', EmployeeController.getAllEmployees);
 router.get('/:te_id', EmployeeController.getEmployeeByTeid);
-router.put('updateEmployee/:teid', EmployeeController.updateEmployee);
+router.get('/managers', EmployeeController.getEmployeeManagers);
+router.get('/manager/:managerId', EmployeeController.getEmployeeByManagerId);
+
+
+router.put('updateEmployee/:te_id', EmployeeController.updateEmployee);
 
 
 export default router;
