@@ -208,7 +208,7 @@ public getEmployeeByTeid: RequestHandler = async (req: Request, res: Response): 
   // Update an employee
   public updateEmployee: RequestHandler = async (req: Request, res: Response): Promise<void> => {
     try {
-      const { te_id } = req.params;
+      const { teid } = req.params;
       const { first_name, last_name, email, phone_number, date_of_joining, manager_id } = req.body;
 
       const updates: any[] = [];
@@ -226,7 +226,7 @@ public getEmployeeByTeid: RequestHandler = async (req: Request, res: Response): 
         return;
       }
 
-      updates.push(te_id);
+      updates.push(teid);
       const query = `UPDATE employees SET ${setFields.join(', ')} WHERE TE_ID = ?`;
 
       // const database = await initializeDB();  // Ensure db is resolved first
