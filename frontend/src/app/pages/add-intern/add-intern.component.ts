@@ -25,4 +25,6 @@ export class AddInternComponent {
     console.log('Intern added:', this.newIntern);
     this.router.navigate(['/interns', this.managerId]);
   }
+
+  
 }

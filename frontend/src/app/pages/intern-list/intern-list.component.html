@@ -2,7 +2,11 @@
 <h1>Intern List</h1>
 <div class="container">
   <h2>Interns</h2>
-  <table>
+
+  <!-- ✅ Show message when no interns are found -->
+  <p *ngIf="!interns || interns.length === 0">No interns available.</p>
+
+  <table *ngIf="interns && interns.length > 0">
     <tr>
       <th>ID</th>
       <th>Name</th>
@@ -18,5 +22,6 @@
       <td>{{ intern.sme }}</td>
     </tr>
   </table>
+
   <button (click)="addIntern()">Add Intern</button>
 </div>

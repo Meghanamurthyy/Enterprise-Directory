@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { NavbarComponent } from '../../components/navbar/navbar.component'; // ✅ Import NavbarComponent
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-
+import { UsersService } from '../../services/users.service';
 
 @Component({
   selector: 'app-intern-list',
@@ -20,11 +20,23 @@ export class InternListComponent {
     { id: 102, name: 'Bob', program: 'AI/ML', expertise: 'Python', sme: 'Sarah' }
   ];
 
-  constructor(private route: ActivatedRoute, private router: Router) {
+  // ✅ Merged both constructors into one
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private usersService: UsersService
+  ) {
     this.managerId = +this.route.snapshot.paramMap.get('managerId')!;
   }
 
   addIntern() {
     this.router.navigate(['/add-intern', this.managerId]);
+  }
+
+  ngOnInit() {
+    this.usersService.getUsers().subscribe((data: any) => {
+      console.log("fetceh", data);
+      this.interns = data;
+    });
   }
 }
