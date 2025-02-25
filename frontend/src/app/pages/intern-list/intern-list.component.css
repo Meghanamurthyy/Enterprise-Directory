@@ -1,75 +1,54 @@
-/* General Page Styling */
-.intern-list-container {
-    max-width: 900px;
-    margin: auto;
-    padding: 20px;
-    font-family: 'Arial', sans-serif;
-    background-color: #f0f8f8; /* 🌿 Very Light Teal */
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f6f9;
+  margin: 0;
+  padding: 0;
 }
 
-/* Title Styling */
-h2 {
-    text-align: center;
-    color: #ff944d; /* 🍊 Soft Orange */
-    font-size: 28px;
-    margin-bottom: 30px; /* Bigger Space Below Title */
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Intern Card */
-.intern-card {
-    display: flex;
-    align-items: flex-start;
-    background-color: #fef6f0; /* 🍑 Very Light Orange */
-    padding: 25px;  /* Bigger Padding for Better Spacing */
-    border-radius: 10px;
-    margin-bottom: 25px;  /* Bigger Space Between Each Intern Card */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease-in-out;
+h1, h2 {
+  text-align: center;
+  color: #333;
 }
 
-.intern-card:hover {
-    transform: translateY(-3px);
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
 }
 
-/* Intern Info */
-.intern-info {
-    flex-grow: 1;
-    padding-left: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px; /* MUCH BIGGER SPACE Between ID, Name, Program, Expertise, SME */
+th, td {
+  padding: 12px;
+  text-align: left;
+  border: 1px solid #ddd;
 }
 
-/* Intern Details Styling */
-.intern-detail {
-    font-size: 18px;
-    color: #333;
-    font-weight: 500;
+th {
+  background-color: #ff8800;
+  color: white;
 }
 
-.intern-label {
-    font-weight: bold;
-    color: #ff944d; /* 🍊 Soft Orange */
-    font-size: 18px;
+button {
+  background-color: #ff9100;
+  color: white;
+  padding: 10px;
+  border-radius: 6px;
+  cursor: pointer;
 }
 
-/* Add Intern Button */
-.add-intern-btn {
-    display: block;
-    width: fit-content;
-    margin: 30px auto; /* More Space Above Add Button */
-    background-color: #66c2c2; /* 🌿 Light Teal */
-    color: white;
-    border: none;
-    padding: 15px 25px;  /* Bigger Button */
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 18px;  /* Bigger Font */
-    transition: background-color 0.3s ease-in-out;
-}
-
-.add-intern-btn:hover {
-    background-color: #52a2a2;
+.edit-intern-form {
+  max-width: 600px;
+  margin: auto;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
 }

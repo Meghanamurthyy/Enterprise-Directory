@@ -7,5 +7,6 @@ export const routes: Routes = [
   { path: '', component: ManagerListComponent },
   { path: 'interns/:managerId', component: InternListComponent },
   { path: 'add-intern/:managerId', component: AddInternComponent },
+  { path: 'interns/:managerId/:employeeId', component: InternListComponent },
   { path: '**', redirectTo: '', pathMatch: 'full' }
 ];

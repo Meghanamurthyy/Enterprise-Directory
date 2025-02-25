@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { NavbarComponent } from '../../components/navbar/navbar.component'; // ✅ Import NavbarComponent
+//import { NavbarComponent } from '../../components/navbar/navbar.component'; // ✅ Import NavbarComponent
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
@@ -11,17 +11,20 @@ import { RouterModule } from '@angular/router';
   standalone: true,
   templateUrl: './manager-list.component.html',
   styleUrls: ['./manager-list.component.css'],
-  imports: [CommonModule, NavbarComponent, FormsModule, RouterModule]
+  imports: [CommonModule,  FormsModule, RouterModule]
 })
 export class ManagerListComponent {
   managers = [
-    { id: 1, name: 'John Doe', interns: ['Alice', 'Bob'], photo: 'assets/manager1.jpg' },
-    { id: 2, name: 'Jane Smith', interns: ['Charlie'], photo: 'assets/manager2.jpg' }
+    { id: 604897, name: 'John Doe', interns: ['Alice', 'Bob'], photo: 'assets/manager1.jpg' },
+    { id: 45789, name: 'Jane Smith', interns: ['Charlie'], photo: 'assets/manager2.jpg' }
   ];
 
   constructor(private router: Router) {}
 
-  viewInterns(managerId: number) {
-    this.router.navigate(['/interns', managerId]);
+  viewInterns(managerId: number, employeeId: number) {
+    console.log("Navigating with:", managerId, employeeId);
+    this.router.navigate(['/interns', managerId, employeeId]);
   }
+  
+  
 }

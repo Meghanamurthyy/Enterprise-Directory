@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { NavbarComponent } from '../../components/navbar/navbar.component'; // ✅ Import NavbarComponent
+//import { NavbarComponent } from '../../components/navbar/navbar.component'; // ✅ Import NavbarComponent
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
@@ -11,7 +11,7 @@ import { RouterModule } from '@angular/router';
   standalone: true,
   templateUrl: './add-intern.component.html',
   styleUrls: ['./add-intern.component.css'],
-  imports: [CommonModule, NavbarComponent, FormsModule, RouterModule]
+  imports: [CommonModule, FormsModule, RouterModule]
 })
 export class AddInternComponent {
   managerId!: number;

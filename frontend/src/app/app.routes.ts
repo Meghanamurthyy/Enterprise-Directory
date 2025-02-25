@@ -8,5 +8,7 @@ export const routes: Routes = [
   { path: '', component: ManagerListComponent },
   { path: 'interns/:managerId', component: InternListComponent },
   { path: 'add-intern/:managerId', component: AddInternComponent },
+  { path: 'intern-list/:id', component: InternListComponent }, 
+  { path: 'interns/:managerId/:employeeId', component: InternListComponent },
   { path: '**', redirectTo: '', pathMatch: 'full' } // Redirect unknown routes to the homepage
 ];

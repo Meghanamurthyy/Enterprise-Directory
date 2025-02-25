@@ -1,22 +1,99 @@
-<!-- <app-navbar></app-navbar> -->
+<div class="employee-details-container">
+  <h2>Employee Details</h2>
+  <div class="employee-card" *ngIf="employee">
+    <p><strong>Employee ID:</strong> {{ employee?.id }}</p>
+    <p><strong>Name:</strong> {{ employee?.first_name }} {{ employee?.last_name }}</p>
+    <p><strong>Email:</strong> {{ employee?.email }}</p>
+    <p><strong>Phone:</strong> {{ employee?.phone_number }}</p>
+    <p><strong>Joining Date:</strong> {{ employee?.date_of_joining }}</p>
+    <p><strong>Program Name:</strong> {{ employee?.program_name }}</p>
+    <p><strong>Program Details:</strong> {{ employee?.program_details }}</p>
+    <p><strong>Status:</strong> {{ employee?.status }}</p>
+    
+    <button (click)="toggleEditForm()">Modify</button>
+
+    <!-- Editable Form Section -->
+    <div *ngIf="isEditing" class="edit-form">
+      <h3>Edit Employee Details</h3>
+      <form (ngSubmit)="saveChanges()">
+        <label>Program Name:</label>
+        <input type="text" [(ngModel)]="employee.program_name" name="program_name" required />
+        
+        <label>Program Details:</label>
+        <input type="text" [(ngModel)]="employee.program_details" name="program_details" required />
+        
+        <label>Status:</label>
+        <select [(ngModel)]="employee.status" name="status" required>
+          <option value="Active">Active</option>
+          <option value="Inactive">Inactive</option>
+          <option value="On Leave">On Leave</option>
+        </select>
+
+        <div class="btn-group">
+          <button type="submit" class="save-btn">Save</button>
+          <button type="button" class="cancel-btn" (click)="toggleEditForm()">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<ng-template #loading>
+  <p>Loading details...</p>
+</ng-template>
+<br>
+
 <h1>Intern List</h1>
 <div class="container">
   <h2>Interns</h2>
   <table>
     <tr>
       <th>ID</th>
-      <th>Name</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Email</th>
+      <th>Phone No</th>
+      <th>Date Join</th>
       <th>Program</th>
       <th>Expertise</th>
       <th>SME</th>
+      <th>Actions</th>
     </tr>
     <tr *ngFor="let intern of interns">
       <td>{{ intern.id }}</td>
-      <td>{{ intern.name }}</td>
+      <td>{{ intern.first_name }}</td>
+      <td>{{ intern.last_name }}</td>
+      <td>{{ intern.email }}</td>
+      <td>{{ intern.phno }}</td>
+      <td>{{ intern.datejoin }}</td>
       <td>{{ intern.program }}</td>
       <td>{{ intern.expertise }}</td>
       <td>{{ intern.sme }}</td>
+      <td>
+        <button (click)="editIntern(intern)">Update</button>
+      </td>
     </tr>
   </table>
+  
   <button (click)="addIntern()">Add Intern</button>
+
+  <!-- Update Form Section -->
+  <div *ngIf="selectedIntern" class="edit-intern-form">
+    <h3>Update Intern Details</h3>
+    <form (ngSubmit)="saveInternChanges()">
+      <label>Program:</label>
+      <input type="text" [(ngModel)]="selectedIntern.program" name="program" required />
+
+      <label>Expertise:</label>
+      <input type="text" [(ngModel)]="selectedIntern.expertise" name="expertise" required />
+
+      <label>SME:</label>
+      <input type="text" [(ngModel)]="selectedIntern.sme" name="sme" required />
+
+      <div class="btn-group">
+        <button type="submit" class="save-btn">Save</button>
+        <button type="button" class="cancel-btn" (click)="selectedIntern = null">Cancel</button>
+      </div>
+    </form>
+  </div>
 </div>

@@ -1,112 +1,79 @@
-/* General Page Styling */
-.manager-list-container {
-    max-width: 800px;
-    margin: auto;
-    padding: 20px;
-    font-family: 'Arial', sans-serif;
-    background-color: #f0f8f8; /* 🌿 Very Light Teal */
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* Title Styling */
-  h2 {
-    text-align: center;
-    color: #ff944d; /* 🍊 Soft Orange */
-    font-size: 28px;
-    margin-bottom: 20px;
-  }
-  
-  /* Manager Card */
-  .manager-card {
-    display: flex;
-    align-items: center;
-    background-color: #fef6f0; /* 🍑 Very Light Orange */
-    padding: 15px;
-    border-radius: 10px;
-    margin-bottom: 15px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease-in-out;
-  }
-  
-  .manager-card:hover {
-    transform: translateY(-3px);
-  }
-  
-  /* Manager Photo (Left Side) */
-  .manager-photo-container {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    background-color: white; /* White Circle Around Image */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 3px solid #ff944d; /* 🍊 Soft Orange Border */
-    margin-right: 15px; /* Space between photo and details */
-  }
-  
-  .manager-photo {
-    width: 90px;
-    height: 90px;
-    border-radius: 50%;
-    object-fit: cover;
-  }
-  
-  /* Manager Details (Right Side) */
-  .manager-info {
-    flex-grow: 1;
-  }
-  
-  .manager-name {
-    font-size: 20px;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 5px;
-  }
-  
-  .manager-interns {
-    font-size: 14px;
-    color: #666;
-    line-height: 1.5;
-  }
-  
-  /* Buttons Layout */
-  .button-container {
-    display: flex;
-    gap: 10px; /* Space between buttons */
-    margin-top: 10px;
-  }
-  
-  /* View Interns Button */
-  .view-btn {
-    background-color: #ffb366; /* 🍊 Light Orange */
-    color: white;
-    border: none;
-    padding: 8px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 14px;
-    transition: background-color 0.3s ease-in-out;
-  }
-  
-  .view-btn:hover {
-    background-color: #ff944d;
-  }
-  
-  /* Edit Button */
-  .edit-btn {
-    background-color: #66c2c2; /* 🌿 Light Teal */
-    color: white;
-    border: none;
-    padding: 8px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 14px;
-    transition: background-color 0.3s ease-in-out;
-  }
-  
-  .edit-btn:hover {
-    background-color: #52a2a2;
-  }
-  
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+  font-family: 'Arial', sans-serif;
+  background-color: rgb(236, 233, 233);
+}
+
+h2 {
+  text-align: center;
+  color: #333;
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+
+.manager-card {
+  background: linear-gradient(135deg, #6b655a, #f1c056);
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin: 15px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: transform 0.3s ease-in-out;
+}
+
+.manager-card:hover {
+  transform: translateY(-5px);
+}
+
+.manager-card img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #da8302;
+}
+
+.manager-card h3 {
+  flex: 1;
+  margin-left: 15px;
+  font-size: 22px;
+  color: #030201;
+}
+
+.manager-card p {
+  flex: 2;
+  font-size: 16px;
+  color: #555;
+}
+
+button {
+  background-color: #95938e;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background-color:#e09b05;
+}
+
+button:nth-child(2) {
+  background-color: #28a745;
+  margin-left: 10px;
+}
+
+button:nth-child(2):hover {
+  background-color: #218838;
+}
+
+body{
+  background-color: #a19d9d;
+}
