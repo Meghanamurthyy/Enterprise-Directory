@@ -244,19 +244,80 @@ public getEmployeeByTeid: RequestHandler = async (req: Request, res: Response): 
       res.status(500).json({ message: 'Internal Server Error', error });
     }
   };
+// get manager unique
+public getEmployeeManagers: RequestHandler = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const db = (req as any).db;
+    const query = `
+      SELECT 
+          e.TE_ID, 
+          e.first_name, 
+          e.last_name, 
+          e.email, 
+          e.phone_number, 
+          e.date_of_joining, 
+          e.manager_id,
+          ep.program_id, 
+          p.program_name, 
+          p.program_description
+      FROM Employees e
+      LEFT JOIN Employee_Programs ep ON e.TE_ID = ep.TE_ID
+      LEFT JOIN Programs p ON ep.program_id = p.program_id
+      WHERE e.TE_ID IN (SELECT DISTINCT manager_id FROM Employees WHERE manager_id IS NOT NULL);
+    `;
+    
+    const rows: {
+      TE_ID: string; 
+      first_name: string; 
+      last_name: string; 
+      email: string; 
+      phone_number: string | null; 
+      date_of_joining: string; 
+      manager_id: string | null;
+      program_id: string | null; 
+      program_name: string | null; 
+      program_description: string | null;
+    }[] = await db.all(query);
 
-   // Get unique employee managers
-  public getEmployeeManagers: RequestHandler = async (req: Request, res: Response): Promise<void> => {
-    try {
-        const db = (req as any).db;
-        const query = `SELECT DISTINCT manager_id FROM Employees WHERE manager_id IS NOT NULL`;
-        const rows = await db.all(query);
-        res.status(200).json(rows);
-    } catch (error) {
-        console.error('Error fetching employee managers:', error);
-        res.status(500).json({ message: 'Internal Server Error', error });
-    }
-  };
+    // Group programs by manager ID
+    const managersMap: Record<string, any> = {};
+
+    rows.forEach((row) => {
+      const { TE_ID, first_name, last_name, email, phone_number, date_of_joining, manager_id, program_id, program_name, program_description } = row;
+      
+      if (!managersMap[TE_ID]) {
+        managersMap[TE_ID] = {
+          TE_ID,
+          first_name,
+          last_name,
+          email,
+          phone_number,
+          date_of_joining,
+          manager_id,
+          programs: []
+        };
+      }
+
+      if (program_id) {
+        managersMap[TE_ID].programs.push({
+          program_id,
+          program_name,
+          program_description
+        });
+      }
+    });
+
+    const managersList = Object.values(managersMap);
+    
+    res.status(200).json(managersList);
+  } catch (error) {
+    console.error('Error fetching managers with programs:', error);
+    res.status(500).json({ message: 'Internal Server Error', error });
+  }
+};
+
+
+
    // Get employees by manager ID
   public getEmployeeByManagerId: RequestHandler = async (req: Request, res: Response): Promise<void> => {
     try {

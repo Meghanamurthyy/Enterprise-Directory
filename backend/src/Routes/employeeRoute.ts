@@ -15,10 +15,10 @@ import EmployeeController from '../controller/EmployeeController';
 
 const router = Router();
 
+router.get('/managers', EmployeeController.getEmployeeManagers);
+router.get('/manager/:manager_id', EmployeeController.getEmployeeByManagerId);
 router.get('/', EmployeeController.getAllEmployees);
 router.get('/:te_id', EmployeeController.getEmployeeByTeid);
-router.get('/managers', EmployeeController.getEmployeeManagers);
-router.get('/manager/:managerId', EmployeeController.getEmployeeByManagerId);
 router.put('/updateEmployee/:teid', EmployeeController.updateEmployee);
 
 
