@@ -301,56 +301,55 @@ class ProgramController {
     }
   };
 
-  
 
-  // Get employees by program
-  public getEmployeesByProgram: RequestHandler = async (req: Request, res: Response): Promise<void> => {
+  // Get employees with full details for a given program
+public getEmployeesByProgram: RequestHandler = async (req: Request, res: Response): Promise<void> => {
     try {
-        const { program_name } = req.params;  // Ensure correct parameter usage
+        const { program_name } = req.params;
+
         if (!program_name) {
             res.status(400).json({ message: 'Program name is required' });
             return;
         }
 
-        // console.log('🔹 Received program_name:', program_name);
+        const db = (req as any).db; // Get DB instance
 
-        // const db = await initializeDB();
-        const db = (req as any).db; // Get the DB instance from the request
-
-        // Fetch program ID
-        const program = await db.get('SELECT program_id FROM Programs WHERE LOWER(program_name) = LOWER(?)', [program_name]);
+        // Fetch program details
+        const program = await db.get(
+            `SELECT * FROM Programs WHERE LOWER(program_name) = LOWER(?)`, 
+            [program_name]
+        );
 
         if (!program) {
-            console.log(' Program not found:', program_name);
             res.status(404).json({ message: 'Program not found' });
             return;
         }
 
-       
-
-        // Fetch employees assigned to this program
+        // Fetch all employee details for this program
         const employees = await db.all(
-            `SELECT e.TE_ID, e.first_name, e.last_name, ep.expertise_area, ep.sme_status 
-             FROM Employees e 
-             JOIN Employee_Programs ep ON e.TE_ID = ep.TE_ID 
-             WHERE ep.program_id = ?`,
-            [program.program_id]
+            `SELECT 
+                e.TE_ID, e.first_name, e.last_name, e.email, e.phone_number, e.date_of_joining, e.manager_id,
+                ep.expertise_area, ep.sme_status, 
+                p.program_id, p.program_name, p.program_description, p.start_date, p.end_date
+            FROM Employees e
+            JOIN Employee_Programs ep ON e.TE_ID = ep.TE_ID
+            JOIN Programs p ON ep.program_id = p.program_id
+            WHERE LOWER(p.program_name) = LOWER(?)`,
+            [program_name]
         );
 
         if (employees.length === 0) {
-            console.log(' No employees found for the program:', program_name);
-            res.status(404).json({ message: 'No employees found for this program'});
+            res.status(404).json({ message: 'No employees found for this program' });
             return;
         }
 
-        // console.log('Fetched employees:', employees);
-
-        res.status(200).json({ message: 'Employees found', employees });
+        res.status(200).json({ message: 'Employees found', program, employees });
     } catch (error) {
         console.error('Error fetching employees by program:', error);
         res.status(500).json({ message: 'Internal Server Error', error });
     }
 };
+
 }
 
 export default new ProgramController();
