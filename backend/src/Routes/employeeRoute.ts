@@ -20,6 +20,7 @@ router.get('/manager/:manager_id', EmployeeController.getEmployeeByManagerId);
 router.get('/', EmployeeController.getAllEmployees);
 router.get('/:te_id', EmployeeController.getEmployeeByTeid);
 router.put('/updateEmployee/:teid', EmployeeController.updateEmployee);
+router.post('/createEmployee/:manager_id', EmployeeController.createEmployee);
 
 
 export default router;

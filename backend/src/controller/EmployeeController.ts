@@ -320,24 +320,122 @@ public getEmployeeManagers: RequestHandler = async (req: Request, res: Response)
 
    // Get employees by manager ID
   public getEmployeeByManagerId: RequestHandler = async (req: Request, res: Response): Promise<void> => {
-    try {
-      const { manager_id } = req.params;
-      const db = (req as any).db;
-      const query = 'SELECT * FROM Employees WHERE manager_id = ?';
-      const rows = await db.all(query, [manager_id]);
+  try {
+    const { manager_id } = req.params;
+    const db = (req as any).db;
 
-      if (rows.length === 0) {
-        res.status(404).json({ message: 'No employees found for this manager ID' });
-        return;
+    const query = `
+      SELECT 
+        e.TE_ID, 
+        e.first_name, 
+        e.last_name, 
+        e.email, 
+        e.phone_number, 
+        e.date_of_joining, 
+        e.manager_id,
+        ep.program_id, 
+        ep.expertise_area, 
+        ep.sme_status,
+        p.program_name, 
+        p.program_description 
+      FROM Employees e
+      LEFT JOIN Employee_Programs ep ON e.TE_ID = ep.TE_ID
+      LEFT JOIN Programs p ON ep.program_id = p.program_id
+      WHERE e.manager_id = ?;
+    `;
+
+    const rows: {
+      TE_ID: string;
+      first_name: string;
+      last_name: string;
+      email: string;
+      phone_number: string | null;
+      date_of_joining: string;
+      manager_id: string | null;
+      program_id: string | null;
+      expertise_area: string | null;
+      sme_status: boolean | null;
+      program_name: string | null;
+      program_description: string | null;
+    }[] = await db.all(query, [manager_id]);
+
+    if (rows.length === 0) {
+       res.status(404).json({ message: 'No employees found for this manager ID' });
+    }
+
+    // Group employees by TE_ID, aggregating their program details
+    const employeesMap: Record<string, any> = {};
+
+    rows.forEach((row) => {
+      const { TE_ID, first_name, last_name, email, phone_number, date_of_joining, manager_id, program_id, expertise_area, sme_status, program_name, program_description } = row;
+
+      if (!employeesMap[TE_ID]) {
+        employeesMap[TE_ID] = {
+          TE_ID,
+          first_name,
+          last_name,
+          email,
+          phone_number,
+          date_of_joining,
+          manager_id,
+          programs: []
+        };
       }
 
-      res.status(200).json(rows);
+      if (program_id) {
+        employeesMap[TE_ID].programs.push({
+          program_id,
+          expertise_area,
+          sme_status,
+          program_name,
+          program_description
+        });
+      }
+    });
+
+    const employeesList = Object.values(employeesMap);
+    res.status(200).json(employeesList);
+  } catch (error) {
+    console.error('Error fetching employees by manager ID:', error);
+    res.status(500).json({ message: 'Internal Server Error', error });
+  }
+};
+
+
+  // creating employee for specific manager
+  public createEmployee: RequestHandler = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const {manager_id}=req.params;
+      const db=(req as any).db;
+      const {te_id,first_name, last_name, email, phone_number, date_of_joining}=req.body;
+      const query = `
+      INSERT INTO Employees (TE_ID, first_name, last_name, email, phone_number, date_of_joining, manager_id) values(?,?,?,?,?,?,?)
+      `;
+      const result = await db.run(query, [te_id,first_name, last_name, email, phone_number, date_of_joining,manager_id]);
+
+    
+     // Check if insert was successful (SQLite `run` returns `{ changes: 1 }` for success)
+    if (result.changes === 0) {
+       res.status(500).json({ message: 'Failed to insert employee' });
+    }
+
+    // Construct the response manually only if the insert was successful
+    const insertedEmployee = {
+      TE_ID: te_id,
+      first_name,
+      last_name,
+      email,
+      phone_number,
+      date_of_joining,
+      manager_id
+    };
+      
+      res.status(200).json({ message: 'Employee created successfully',insertedEmployee});
     } catch (error) {
-      console.error('Error fetching employees by manager ID:', error);
+      console.error('Error creating employee:', error);
       res.status(500).json({ message: 'Internal Server Error', error });
     }
-  };
-
+};
 }
 
 export default new EmployeeController();
