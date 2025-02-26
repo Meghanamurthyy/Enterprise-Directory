@@ -203,7 +203,8 @@ class ProgramController {
   // Create a new program
   public createProgram: RequestHandler = async (req: Request, res: Response): Promise<void> => {
     try {
-      const { program_id,program_name, program_description, start_date, end_date } = req.body;
+      const { program_id,program_name, description, start_date, end_date } = req.body;
+      const program_description = description || null;
 
       if (!program_id || !program_name) {
         res.status(400).json({ message: 'program_name, start_date, and end_date are required' });
@@ -227,40 +228,34 @@ class ProgramController {
 };
 
   // Assign an employee to a program
-  public assignEmployeeToProgram: RequestHandler = async (req: Request, res: Response): Promise<void> => {
+ public assignEmployeeToProgram: RequestHandler = async (req: Request, res: Response): Promise<void> => {
     try {
-      const { TE_ID, program_name, expertise_area, sme_status } = req.body;
+      const { company_id, program_id, area_of_Expertise, sme_status } = req.body;
+      const expertise_area = area_of_Expertise;
+      const TE_ID = company_id;
 
-      if (!TE_ID || !program_name) {
-        res.status(400).json({ message: 'TE_ID and program_name are required' });
+      if (!TE_ID || !program_id) {
+        res.status(400).json({ message: 'TE_ID and program_id are required' });
         return;
       }
 
-      // const db = await initializeDB();
       const db = (req as any).db; // Get the DB instance from the request
 
-      // Fetch program ID
-      const program = await db.get('SELECT program_id FROM Programs WHERE program_name = ?', [program_name]);
-      if (!program) {
-        res.status(404).json({ message: 'Program not found' });
-        return;
-      }
-
-      console.log(program.program_id)
       // Insert employee-program mapping with conflict handling
       const result = await db.run(
         `INSERT INTO Employee_Programs (TE_ID, program_id, expertise_area, sme_status) 
          VALUES (?, ?, ?, ?) 
          ON CONFLICT(TE_ID, program_id) DO UPDATE SET expertise_area = excluded.expertise_area, sme_status = excluded.sme_status`,
-        [TE_ID, program.program_id, expertise_area, sme_status]
+        [TE_ID, program_id, expertise_area, sme_status]
       );
 
-      res.status(201).json({ message: 'Employee assigned to program successfully', program_id: program.program_id });
+      res.status(201).json({ message: 'Employee assigned to program successfully', program_id });
     } catch (error) {
       console.error('Error assigning employee to program:', error);
       res.status(500).json({ message: 'Internal Server Error', error });
     }
-  };
+};
+
 
   // Update employee program details
   public updateEmployeeProgram: RequestHandler = async (req: Request, res: Response): Promise<void> => {

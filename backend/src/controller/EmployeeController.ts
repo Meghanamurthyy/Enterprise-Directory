@@ -165,7 +165,7 @@ class EmployeeController {
 
 public getEmployeeByTeid: RequestHandler = async (req: Request, res: Response): Promise<void> => {
     try {
-        const { te_id } = req.params;
+        const { id } = req.params;
         const db = (req as any).db;
 
         // Fetch employee details
@@ -174,7 +174,7 @@ public getEmployeeByTeid: RequestHandler = async (req: Request, res: Response): 
             FROM Employees 
             WHERE TE_ID = ?;
         `;
-        const employee = await db.get(employeeQuery, [te_id]);
+        const employee = await db.get(employeeQuery, [id]);
 
         if (!employee) {
             res.status(404).json({ message: 'Invalid TE_ID. Employee not found.' });
@@ -189,7 +189,7 @@ public getEmployeeByTeid: RequestHandler = async (req: Request, res: Response): 
             JOIN Programs p ON ep.program_id = p.program_id
             WHERE ep.TE_ID = ?;
         `;
-        const programs = await db.all(programsQuery, [te_id]);
+        const programs = await db.all(programsQuery, [id]);
 
         // Structure the response
         const response = {
@@ -321,7 +321,7 @@ public getEmployeeManagers: RequestHandler = async (req: Request, res: Response)
    // Get employees by manager ID
   public getEmployeeByManagerId: RequestHandler = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { manager_id } = req.params;
+    const { manager_id } = req.query;
     const db = (req as any).db;
 
     const query = `
@@ -405,9 +405,10 @@ public getEmployeeManagers: RequestHandler = async (req: Request, res: Response)
   // creating employee for specific manager
   public createEmployee: RequestHandler = async (req: Request, res: Response): Promise<void> => {
     try {
-      const {manager_id}=req.params;
+      // const {manager_id}=req.params;
       const db=(req as any).db;
-      const {te_id,first_name, last_name, email, phone_number, date_of_joining}=req.body;
+      const {company_id,first_name, last_name, email, phone_number, date_of_joining,manager_id}=req.body;
+      const te_id=company_id;
       const query = `
       INSERT INTO Employees (TE_ID, first_name, last_name, email, phone_number, date_of_joining, manager_id) values(?,?,?,?,?,?,?)
       `;
