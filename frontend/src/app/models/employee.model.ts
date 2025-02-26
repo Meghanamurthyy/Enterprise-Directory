@@ -9,5 +9,5 @@ export interface Employee {
     manager_id: string;
     program_name: string;
     area_of_expertise: string;
-    sme_status: boolean;
+    sme_status: string;
   }

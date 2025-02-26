@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { EmployeeService } from '../../services/employee.service';
 import { Program } from '../../models/program.model';
 import { Employee } from '../../models/employee.model';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-add-employee-program',
@@ -13,7 +14,7 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './add-employee-program.component.html',
   styleUrls: ['./add-employee-program.component.css'],
 })
-export class AddEmployeeProgramComponent {
+export class AddEmployeeProgramComponent implements OnInit {
   newProgram: Program = {
     program_id: '',
     program_name: '',
@@ -26,11 +27,10 @@ export class AddEmployeeProgramComponent {
     program_id: '',
     company_id: '',
     area_of_expertise: '',
-    sme_status: false,
+    sme_status: '',
   };
 
   newEmployee: Employee = {
-    
     company_id: '',
     first_name: '',
     last_name: '',
@@ -40,15 +40,17 @@ export class AddEmployeeProgramComponent {
     manager_id: '',
     program_name: '',
     area_of_expertise: '',
-    sme_status: false,
+    sme_status: '',
   };
 
   constructor(private employeeService: EmployeeService, private router: Router) {}
 
+  ngOnInit(): void {}
+
   // Handle Create Program Form Submission
   onCreateProgramSubmit(): void {
     this.employeeService.createProgram(this.newProgram).subscribe({
-      next: (response) => {
+      next: (response: Program) => {
         alert('Program created successfully!');
         this.newProgram = {
           program_id: '',
@@ -58,7 +60,7 @@ export class AddEmployeeProgramComponent {
           end_date: '',
         };
       },
-      error: (error) => {
+      error: (error: HttpErrorResponse) => {
         alert('Error creating program: ' + error.message);
       },
     });
@@ -70,16 +72,16 @@ export class AddEmployeeProgramComponent {
     this.employeeService
       .assignProgram(program_id, company_id, area_of_expertise, sme_status)
       .subscribe({
-        next: (response) => {
+        next: (response: any) => {
           alert('Program assigned successfully!');
           this.assignProgram = {
             program_id: '',
             company_id: '',
             area_of_expertise: '',
-            sme_status: false,
+            sme_status: '',
           };
         },
-        error: (error) => {
+        error: (error: HttpErrorResponse) => {
           alert('Error assigning program: ' + error.message);
         },
       });
@@ -88,7 +90,7 @@ export class AddEmployeeProgramComponent {
   // Handle Create Employee Form Submission
   onCreateEmployeeSubmit(): void {
     this.employeeService.createEmployee(this.newEmployee).subscribe({
-      next: (response) => {
+      next: (response: Employee) => {
         alert('Employee created successfully!');
         this.newEmployee = {
           company_id: '',
@@ -100,10 +102,10 @@ export class AddEmployeeProgramComponent {
           manager_id: '',
           program_name: '',
           area_of_expertise: '',
-          sme_status: false,
+          sme_status: '',
         };
       },
-      error: (error) => {
+      error: (error: HttpErrorResponse) => {
         alert('Error creating employee: ' + error.message);
       },
     });
