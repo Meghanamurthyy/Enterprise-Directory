@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "manager-interns-app": {
+    "employee-app": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,19 +13,14 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/manager-interns-app",
+            "outputPath": "dist/employee-app",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
               "zone.js"
             ],
             "tsConfig": "tsconfig.app.json",
-            "assets": [
-              {
-                "glob": "**/*",
-                "input": "public"
-              }
-            ],
+
             "styles": [
               "src/styles.css"
             ],
@@ -64,10 +59,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "manager-interns-app:build:production"
+              "buildTarget": "employee-app:build:production"
             },
             "development": {
-              "buildTarget": "manager-interns-app:build:development"
+              "buildTarget": "employee-app:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -86,7 +81,13 @@
             "assets": [
               {
                 "glob": "**/*",
-                "input": "public"
+                "input": "public",
+                "output": "/"
+              },
+              {
+                "glob": "**/*",
+                "input": "src/assets",
+                "output": "/assets"
               }
             ],
             "styles": [
@@ -99,6 +100,6 @@
     }
   },
   "cli": {
-    "analytics": "6f7e52ae-8d5a-47b9-bb79-3ac050ccabcc"
+    "analytics": "495278ea-0f53-40c3-aae7-d32617636351"
   }
 }

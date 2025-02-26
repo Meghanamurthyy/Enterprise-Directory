@@ -1,0 +1,28 @@
+<div class="employee-details" *ngIf="employee">
+  <h2>{{ employee.first_name }} {{ employee.last_name }}</h2>
+  <p><strong>Employee ID:</strong> {{ employee.company_id}}</p>
+  <p><strong>Email:</strong> {{ employee.email }}</p>
+  <p><strong>Phone:</strong> {{ employee.phone_number }}</p>
+  <p><strong>Date of Joining:</strong> {{ employee.date_of_joining | date }}</p>
+  <p><strong>Manager ID:</strong> {{ employee.manager_id }}</p>
+  <p><strong>Program Name:</strong> {{ employee.program_name }}</p>
+  <p><strong>Area of Expertise:</strong> {{ employee.area_of_expertise }}</p>
+  <p><strong>SME Status:</strong> {{ employee.sme_status ? 'Yes' : 'No' }}</p>
+  <button (click)="modifyEmployee()">Modify</button>
+</div>
+
+<div class="subordinates" *ngIf="subordinates.length > 0">
+  <h3>Employees Working Under {{ employee?.first_name }} {{ employee?.last_name }}</h3>
+  <div *ngFor="let subordinate of subordinates" class="subordinate">
+    <p><strong>Name:</strong> {{ subordinate.first_name }} {{ subordinate.last_name }}</p>
+    <p><strong>Email:</strong> {{ subordinate.email }}</p>
+    <p><strong>Phone:</strong> {{ subordinate.phone_number }}</p>
+    <p><strong>Date of Joining:</strong> {{ subordinate.date_of_joining | date }}</p>
+    <p><strong>Program Name:</strong> {{ subordinate.program_name }}</p>
+    <p><strong>Area of Expertise:</strong> {{ subordinate.area_of_expertise }}</p>
+    <p><strong>SME Status:</strong> {{ subordinate.sme_status ? 'Yes' : 'No' }}</p>
+    <button (click)="modifyEmployee(subordinate.company_id)">Modify</button>
+  </div>
+</div>
+
+<button (click)="navigateToAddPage()">Add Employee / Program</button>

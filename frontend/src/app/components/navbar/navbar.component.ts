@@ -1,18 +1,16 @@
-
-//import { Router } from '@angular/router';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
-
-
-
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css'],
-  imports: [CommonModule, FormsModule, RouterModule]
 })
-export class NavbarComponent {}
+export class NavbarComponent {
+  @Output() searchEvent = new EventEmitter<string>();
+
+  onSearch(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    this.searchEvent.emit(input.value);
+  }
+}

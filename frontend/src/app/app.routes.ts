@@ -1,14 +1,11 @@
 import { Routes } from '@angular/router';
-import { ManagerListComponent } from './pages/manager-list/manager-list.component';
-import { InternListComponent } from './pages/intern-list/intern-list.component';
-import { AddInternComponent } from './pages/add-intern/add-intern.component';
-//import { LayoutComponent } from './components/layout/layout.component';
+import { EmployeeListComponent } from './components/employee-list/employee-list.component';
+import { EmployeeDetailsComponent } from './components/employee-details/employee-details.component';
+import { AddEmployeeProgramComponent } from './components/add-employee-program/add-employee-program.component';
 
 export const routes: Routes = [
-  { path: '', component: ManagerListComponent },
-  { path: 'interns/:managerId', component: InternListComponent },
-  { path: 'add-intern/:managerId', component: AddInternComponent },
-  { path: 'intern-list/:id', component: InternListComponent }, 
-  { path: 'interns/:managerId/:employeeId', component: InternListComponent },
-  { path: '**', redirectTo: '', pathMatch: 'full' } // Redirect unknown routes to the homepage
+  { path: 'employees', component: EmployeeListComponent },
+  { path: 'employees/:id', component: EmployeeDetailsComponent },
+  { path: 'add', component: AddEmployeeProgramComponent },
+  { path: '', redirectTo: '/employees', pathMatch: 'full' },
 ];

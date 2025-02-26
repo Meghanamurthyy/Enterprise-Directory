@@ -1,15 +1,14 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { NavbarComponent } from './components/navbar/navbar.component'; // ✅ Import NavbarComponent
-
+import { RouterModule } from '@angular/router'; // Import RouterModule for routing
+import { NavbarComponent } from './components/navbar/navbar.component'; // Import the navbar component
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NavbarComponent],
+  imports: [RouterModule, NavbarComponent], // Import RouterModule and NavbarComponent
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  title = 'manager-interns-app';
+  title = 'employee-app'; // Optional: You can remove this if not needed
 }

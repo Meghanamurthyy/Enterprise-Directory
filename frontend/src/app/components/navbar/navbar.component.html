@@ -1,15 +1,8 @@
 <nav class="navbar">
-    <!-- Company Logo -->
-    <div class="logo-container">
-      <img src="assets/company-logo.png" alt="company Logo" class="company-logo">
+    <div class="navbar-left">
+      <img src="assets/images/logo.png" alt="Company Logo" class="logo">
     </div>
-  
-    <!-- Search Bar -->
-    <input type="text" placeholder="Search by ID" class="search-bar">
-  
-    <!-- Account Details -->
-    <div class="account">
-      <span>My Account</span>
+    <div class="navbar-right">
+      <input type="text" placeholder="Search Employee by ID" (input)="onSearch($event)">
     </div>
   </nav>
-  
