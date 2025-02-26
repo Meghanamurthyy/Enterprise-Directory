@@ -436,6 +436,52 @@ public getEmployeeManagers: RequestHandler = async (req: Request, res: Response)
       res.status(500).json({ message: 'Internal Server Error', error });
     }
 };
+  
+    // Add employee using manager id
+    public addEmployee: RequestHandler = async (req: Request, res: Response): Promise<void> => {
+      try {
+        const db = (req as any).db;
+        const { te_id, first_name, last_name, email, phone_number, date_of_joining ,manager_id} = req.body;
+  
+        // Check if the manager exists
+        const managerQuery = 'SELECT * FROM Employees WHERE TE_ID = ? AND manager_id IS NULL';
+        const manager = await db.get(managerQuery, [manager_id]);
+  
+        if (!manager) {
+          res.status(404).json({ message: 'Manager not found' });
+          return;
+        }
+  
+        // Insert the employee
+        const employeeQuery = `
+          INSERT INTO Employees (TE_ID, first_name, last_name, email, phone_number, date_of_joining, manager_id)
+          VALUES (?, ?, ?, ?, ?, ?, ?);
+        `;
+        const result = await db.run(employeeQuery, [te_id, first_name, last_name, email, phone_number, date_of_joining, manager_id]);
+  
+        // Check if insert was successful (SQLite `run` returns `{ changes: 1 }` for success)
+        if (result.changes === 0) {
+          res.status(500).json({ message: 'Failed to insert employee' });
+          return;
+        }
+  
+        // Construct the response manually only if the insert was successful
+        const insertedEmployee = {
+          TE_ID: te_id,
+          first_name,
+          last_name,
+          email,
+          phone_number,
+          date_of_joining,
+          manager_id
+        };
+  
+        res.status(200).json({ message: 'Employee created successfully', insertedEmployee });
+      } catch (error) {
+        console.error('Error adding employee using manager ID:', error);
+        res.status(500).json({ message: 'Internal Server Error', error });
+      }
+    };
 }
 
 export default new EmployeeController();
