@@ -23,6 +23,6 @@ export class EmployeeListComponent implements OnInit {
   }
 
   viewEmployee(id: string): void {
-    this.router.navigate(['/employees', id]);
+    this.router.navigate(['/employees/:id', id]);
   }
 }

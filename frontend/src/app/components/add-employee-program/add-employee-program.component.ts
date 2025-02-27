@@ -47,7 +47,7 @@ export class AddEmployeeProgramComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  // Handle Create Program Form Submission
+  // to handle Create Program Form Submission
   onCreateProgramSubmit(): void {
     this.employeeService.createProgram(this.newProgram).subscribe({
       next: (response: Program) => {
@@ -66,7 +66,7 @@ export class AddEmployeeProgramComponent implements OnInit {
     });
   }
 
-  // Handle Assign Program Form Submission
+  // to handle Assign Program Form Submission
   onAssignProgramSubmit(): void {
     const { program_id, company_id, area_of_expertise, sme_status } = this.assignProgram;
     this.employeeService
@@ -87,7 +87,7 @@ export class AddEmployeeProgramComponent implements OnInit {
       });
   }
 
-  // Handle Create Employee Form Submission
+  // to handle Create Employee Form Submission
   onCreateEmployeeSubmit(): void {
     this.employeeService.createEmployee(this.newEmployee).subscribe({
       next: (response: Employee) => {

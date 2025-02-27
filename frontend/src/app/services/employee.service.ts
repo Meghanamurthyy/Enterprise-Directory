@@ -8,7 +8,7 @@ import { Program } from '../models/program.model';
   providedIn: 'root',
 })
 export class EmployeeService {
-  private apiUrl = 'http://localhost:4590/api'; // Replace with your API URL
+  private apiUrl = 'http://localhost:4590/api'; 
 
   constructor(private http: HttpClient) {}
 
@@ -34,5 +34,9 @@ export class EmployeeService {
 
   createEmployee(employee: Employee): Observable<Employee> {
     return this.http.post<Employee>(`${this.apiUrl}/employees/createEmployee`, employee);
+  }
+
+  updateEmployee(employee: Employee): Observable<Employee> {
+    return this.http.put<Employee>(`${this.apiUrl}/employees/${employee.company_id}`, employee);
   }
 }

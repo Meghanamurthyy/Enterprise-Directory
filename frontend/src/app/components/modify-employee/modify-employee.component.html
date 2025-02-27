@@ -1,0 +1,36 @@
+<div class="modify-employee">
+    <h2>Modify Employee</h2>
+    <form (ngSubmit)="onSubmit()">
+      <label for="first_name">First Name:</label>
+      <input id="first_name" name="first_name" [(ngModel)]="employee.first_name" required>
+  
+      <label for="last_name">Last Name:</label>
+      <input id="last_name" name="last_name" [(ngModel)]="employee.last_name" required>
+  
+      <label for="email">Email:</label>
+      <input id="email" name="email" type="email" [(ngModel)]="employee.email" required>
+  
+      <label for="phone_number">Phone Number:</label>
+      <input id="phone_number" name="phone_number" [(ngModel)]="employee.phone_number" required>
+  
+      <label for="date_of_joining">Date of Joining:</label>
+      <input id="date_of_joining" name="date_of_joining" type="date" [(ngModel)]="employee.date_of_joining" required>
+  
+      <label for="manager_id">Manager ID:</label>
+      <input id="manager_id" name="manager_id" [(ngModel)]="employee.manager_id" required>
+  
+      <label for="program_name">Program Name:</label>
+      <input id="program_name" name="program_name" [(ngModel)]="employee.program_name" required>
+  
+      <label for="area_of_expertise">Area of Expertise:</label>
+      <input id="area_of_expertise" name="area_of_expertise" [(ngModel)]="employee.area_of_expertise" required>
+  
+      <label for="sme_status">SME Status:</label>
+      <select id="sme_status" name="sme_status" [(ngModel)]="employee.sme_status" required>
+        <option value="true">Yes</option>
+        <option value="false">No</option>
+      </select>
+  
+      <button type="submit">Update Employee</button>
+    </form>
+  </div>
