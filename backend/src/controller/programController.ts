@@ -230,9 +230,12 @@ class ProgramController {
   // Assign an employee to a program
  public assignEmployeeToProgram: RequestHandler = async (req: Request, res: Response): Promise<void> => {
     try {
-      const { company_id, program_id, area_of_Expertise, sme_status } = req.body;
-      const expertise_area = area_of_Expertise;
-      const TE_ID = company_id;
+      const { companyId, programId, areaOfExpertise, smeStatus } = req.body;
+      const TE_ID = companyId;
+      const program_id = programId;
+      const expertise_area = areaOfExpertise;
+      const sme_status = smeStatus;
+
 
       if (!TE_ID || !program_id) {
         res.status(400).json({ message: 'TE_ID and program_id are required' });
@@ -260,28 +263,22 @@ class ProgramController {
   // Update employee program details
   public updateEmployeeProgram: RequestHandler = async (req: Request, res: Response): Promise<void> => {
     try {
-      const { TE_ID, program_name, expertise_area, sme_status } = req.body;
-
-      if (!TE_ID || !program_name) {
+      const { company_id, program_id, area_of_expertise, sme_status } = req.body;
+      const TE_ID = company_id;
+      const expertise_area = area_of_expertise;
+      if (!TE_ID || !program_id) {
         res.status(400).json({ message: 'TE_ID and program_name are required' });
         return;
       }
 
       const db = await initializeDB();
 
-      // Fetch program ID
-      const program = await db.get('SELECT program_id FROM Programs WHERE program_name = ?', [program_name]);
-      if (!program) {
-        res.status(404).json({ message: 'Program not found' });
-        return;
-      }
-
       // Update employee's program details
       const result = await db.run(
         `UPDATE Employee_Programs 
          SET expertise_area = ?, sme_status = ? 
          WHERE TE_ID = ? AND program_id = ?`,
-        [expertise_area, sme_status, TE_ID, program.program_id]
+        [expertise_area, sme_status, TE_ID,program_id]
       );
 
       if (result.changes === 0) {

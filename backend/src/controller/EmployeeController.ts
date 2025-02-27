@@ -155,7 +155,9 @@ class EmployeeController {
         // Fetch all employees
         const rows = await db.all('SELECT * FROM Employees'); 
 
-        res.status(200).json(rows); // Send all employees as a JSON response
+       
+
+        res.status(200).json(rows); // owSend all employees as a JSON response
     } catch (error) {
         console.error('Error fetching all employees:', error);
         res.status(500).json({ message: 'Internal Server Error', error });
@@ -287,7 +289,7 @@ public getEmployeeManagers: RequestHandler = async (req: Request, res: Response)
       
       if (!managersMap[TE_ID]) {
         managersMap[TE_ID] = {
-          TE_ID,
+          company_id:TE_ID,
           first_name,
           last_name,
           email,
@@ -363,6 +365,8 @@ public getEmployeeManagers: RequestHandler = async (req: Request, res: Response)
        res.status(404).json({ message: 'No employees found for this manager ID' });
     }
 
+    // console.log(rows);
+
     // Group employees by TE_ID, aggregating their program details
     const employeesMap: Record<string, any> = {};
 
@@ -371,7 +375,7 @@ public getEmployeeManagers: RequestHandler = async (req: Request, res: Response)
 
       if (!employeesMap[TE_ID]) {
         employeesMap[TE_ID] = {
-          TE_ID,
+          company_id: TE_ID,
           first_name,
           last_name,
           email,
@@ -385,7 +389,7 @@ public getEmployeeManagers: RequestHandler = async (req: Request, res: Response)
       if (program_id) {
         employeesMap[TE_ID].programs.push({
           program_id,
-          expertise_area,
+          area_of_expertise:expertise_area,
           sme_status,
           program_name,
           program_description
@@ -394,6 +398,7 @@ public getEmployeeManagers: RequestHandler = async (req: Request, res: Response)
     });
 
     const employeesList = Object.values(employeesMap);
+    // console.log(employeesList);
     res.status(200).json(employeesList);
   } catch (error) {
     console.error('Error fetching employees by manager ID:', error);
@@ -422,7 +427,7 @@ public getEmployeeManagers: RequestHandler = async (req: Request, res: Response)
 
     // Construct the response manually only if the insert was successful
     const insertedEmployee = {
-      TE_ID: te_id,
+      company_id: te_id,
       first_name,
       last_name,
       email,
