@@ -1,6 +1,10 @@
 <div class="modify-employee">
     <h2>Modify Employee</h2>
     <form (ngSubmit)="onSubmit()">
+
+      <label for="company_id">Company ID:</label>
+      <input id="company_id" name="company_id" [(ngModel)]="employee.company_id" required>
+  
       <label for="first_name">First Name:</label>
       <input id="first_name" name="first_name" [(ngModel)]="employee.first_name" required>
   
