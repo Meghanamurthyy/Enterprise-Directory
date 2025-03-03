@@ -145,6 +145,15 @@ export default new EmployeeController();
 import { Request, Response, RequestHandler } from 'express';
 import initializeDB from '../config/db';
 
+// Define a TypeScript interface for the program structure
+interface Program {
+    program_id: string;
+    expertise_area: string;
+    sme_status: string;
+    program_name: string;
+    program_description: string;
+}
+
 class EmployeeController {
   // Get all employees with pagination
   public getAllEmployees: RequestHandler = async (req: Request, res: Response): Promise<void> => {
@@ -163,6 +172,8 @@ class EmployeeController {
         res.status(500).json({ message: 'Internal Server Error', error });
     }
 };
+
+
 
 
 public getEmployeeByTeid: RequestHandler = async (req: Request, res: Response): Promise<void> => {
@@ -193,11 +204,32 @@ public getEmployeeByTeid: RequestHandler = async (req: Request, res: Response): 
         `;
         const programs = await db.all(programsQuery, [id]);
 
-        // Structure the response
+          // Restructure programs to match required format
+        const formattedPrograms = programs.map((program: Program) => ({
+            program_id: program.program_id,
+            area_of_expertise: program.expertise_area, // Renaming expertise_area
+            sme_status: program.sme_status,
+            program_name: program.program_name,
+            program_description: program.program_description
+        }));
+
+         // Structure the response
         const response = {
-            ...employee,  // Employee details
-            programs: programs.length > 0 ? programs : undefined  // Include only if programs exist
+            company_id: employee.TE_ID,  // Rename TE_ID to company_id
+            first_name: employee.first_name,
+            last_name: employee.last_name,
+            email: employee.email,
+            phone_number: employee.phone_number,
+            date_of_joining: employee.date_of_joining,
+            manager_id: employee.manager_id,
+            programs: formattedPrograms.length > 0 ? formattedPrograms : undefined  // Include only if programs exist
         };
+
+        // // Structure the response
+        // const response = {
+        //     ...employee,  // Employee details
+        //     programs: programs.length > 0 ? programs : undefined  // Include only if programs exist
+        // };
 
         res.status(200).json(response);
     } catch (error) {
