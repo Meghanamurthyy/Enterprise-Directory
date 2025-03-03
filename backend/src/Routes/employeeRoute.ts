@@ -21,7 +21,7 @@ router.get('/', EmployeeController.getAllEmployees);
 router.get('/:id', EmployeeController.getEmployeeByTeid);
 router.put('/updateEmployee/:teid', EmployeeController.updateEmployee);
 router.post('/createEmployee', EmployeeController.createEmployee);
-
+router.get('/searchById/:id', EmployeeController.searchById);//new one
 
 export default router;
 

@@ -520,6 +520,106 @@ public getEmployeeManagers: RequestHandler = async (req: Request, res: Response)
         res.status(500).json({ message: 'Internal Server Error', error });
       }
     };
+
+
+    // search functionality by id
+    public searchById: RequestHandler = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { id } = req.params; // Employee ID
+    const db = (req as any).db;
+
+    // Fetch the manager_id for the given employee ID
+    const managerQuery = `
+      SELECT manager_id FROM Employees WHERE TE_ID = ?;
+    `;
+    const employee = await db.get(managerQuery, [id]);
+
+    if (!employee) {
+      res.status(404).json({ message: 'Invalid TE_ID. Employee not found.' });
+      return;
+    }
+
+    const managerId = employee.manager_id || id; // If no manager, use the employee ID as manager
+
+    // Now call the existing getEmployeeByManagerId logic using managerId
+    const employeesQuery = `
+      SELECT 
+        e.TE_ID, 
+        e.first_name, 
+        e.last_name, 
+        e.email, 
+        e.phone_number, 
+        e.date_of_joining, 
+        e.manager_id,
+        ep.program_id, 
+        ep.expertise_area, 
+        ep.sme_status,
+        p.program_name, 
+        p.program_description 
+      FROM Employees e
+      LEFT JOIN Employee_Programs ep ON e.TE_ID = ep.TE_ID
+      LEFT JOIN Programs p ON ep.program_id = p.program_id
+      WHERE e.manager_id = ?;
+    `;
+
+    const rows: {
+      TE_ID: string;
+      first_name: string;
+      last_name: string;
+      email: string;
+      phone_number: string | null;
+      date_of_joining: string;
+      manager_id: string | null;
+      program_id: string | null;
+      expertise_area: string | null;
+      sme_status: boolean | null;
+      program_name: string | null;
+      program_description: string | null;
+    }[] = await db.all(employeesQuery, [managerId]);
+
+    if (rows.length === 0) {
+      res.status(404).json({ message: 'No employees found for this manager ID' });
+      return;
+    }
+
+    // Group employees by TE_ID
+    const employeesMap: Record<string, any> = {};
+
+    rows.forEach((row) => {
+      const { TE_ID, first_name, last_name, email, phone_number, date_of_joining, manager_id, program_id, expertise_area, sme_status, program_name, program_description } = row;
+
+      if (!employeesMap[TE_ID]) {
+        employeesMap[TE_ID] = {
+          company_id: TE_ID,
+          first_name,
+          last_name,
+          email,
+          phone_number,
+          date_of_joining,
+          manager_id,
+          programs: []
+        };
+      }
+
+      if (program_id) {
+        employeesMap[TE_ID].programs.push({
+          program_id,
+          area_of_expertise: expertise_area,
+          sme_status,
+          program_name,
+          program_description
+        });
+      }
+    });
+
+    const employeesList = Object.values(employeesMap);
+    res.status(200).json(employeesList);
+  } catch (error) {
+    console.error('Error in searchById:', error);
+    res.status(500).json({ message: 'Internal Server Error', error });
+  }
+};
+
 }
 
 export default new EmployeeController();
