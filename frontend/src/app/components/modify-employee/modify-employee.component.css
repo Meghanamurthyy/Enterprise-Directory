@@ -1,33 +1,71 @@
 .modify-employee {
-    max-width: 600px;
-    margin: 20px auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+  max-width: 500px;
+  margin: 40px auto;
+  padding: 30px;
+  background: #ffffff;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.modify-employee h2 {
+  text-align: center;
+  color: #333;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.modify-employee form {
+  display: flex;
+  flex-direction: column;
+}
+
+.modify-employee label {
+  font-weight: 600;
+  color: #333;
+  margin-top: 10px;
+}
+
+.modify-employee input, 
+.modify-employee select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 16px;
+  transition: all 0.3s ease-in-out;
+}
+
+.modify-employee input:focus, 
+.modify-employee select:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0px 0px 6px rgba(0, 123, 255, 0.3);
+}
+
+.modify-employee button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 20px;
+  background: linear-gradient(135deg, #fcbd36, #ffa600);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+}
+
+.modify-employee button:hover {
+  background: linear-gradient(135deg, #d8d8d8, #969696);
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .modify-employee {
+      max-width: 90%;
+      padding: 20px;
   }
-  
-  label {
-    display: block;
-    margin-top: 10px;
-  }
-  
-  input, select {
-    width: 100%;
-    padding: 8px;
-    margin-top: 5px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  button {
-    margin-top: 20px;
-    padding: 10px 20px;
-    background-color: orange;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    background-color: darkorange;
-  }
+}

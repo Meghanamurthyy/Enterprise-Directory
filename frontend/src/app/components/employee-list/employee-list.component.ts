@@ -19,10 +19,11 @@ export class EmployeeListComponent implements OnInit {
   ngOnInit(): void {
     this.employeeService.getEmployees().subscribe((data) => {
       this.employees = data;
+      console.log(data);
     });
   }
-
   viewEmployee(id: string): void {
-    this.router.navigate(['/employees/:id', id]);
+    this.router.navigate(['/employees', id]); // Correct way to navigate
   }
+  
 }

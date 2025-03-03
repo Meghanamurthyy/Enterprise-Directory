@@ -7,7 +7,7 @@ import { ModifyEmployeeComponent } from './components/modify-employee/modify-emp
 export const routes: Routes = [
   { path: 'employees', component: EmployeeListComponent },
   { path: 'employees/:id', component: EmployeeDetailsComponent },
-  { path: 'add', component: AddEmployeeProgramComponent },
+  { path: 'add-employee-program', component: AddEmployeeProgramComponent },
   { path: 'modify-employee/:id', component: ModifyEmployeeComponent },
   { path: '', redirectTo: '/employees', pathMatch: 'full' },
   { path: '**', redirectTo: '/employees' },

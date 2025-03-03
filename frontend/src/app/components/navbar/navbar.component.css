@@ -1,17 +1,48 @@
 .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    background-color: orange;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 32px;
+  background: #ff7b00;
+  box-shadow: 0px 5px 15px rgba(75, 75, 75, 0.1);
+  border-radius: 12px;
+  max-width: 90%;
+  margin: 20px auto;
+}
+
+.navbar-left .logo {
+  height: 50px;
+  width: auto;
+  transition: transform 0.3s ease-in-out;
+}
+
+.navbar-left .logo:hover {
+  transform: scale(1.05);
+}
+
+.navbar-right input {
+  width: 280px;
+  padding: 12px;
+  font-size: 16px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  transition: all 0.3s ease-in-out;
+  outline: none;
+}
+
+.navbar-right input:focus {
+  border-color: #ff9900;
+  box-shadow: 0px 0px 10px rgb(250, 151, 3);
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px;
   }
-  
-  .logo {
-    height: 40px;
+
+  .navbar-right input {
+    width: 100%;
   }
-  
-  input {
-    padding: 5px;
-    border: 1px solid lightteal;
-    border-radius: 4px;
-  }
+}

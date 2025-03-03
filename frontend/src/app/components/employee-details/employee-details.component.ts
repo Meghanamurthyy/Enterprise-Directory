@@ -21,27 +21,56 @@ export class EmployeeDetailsComponent implements OnInit {
     private router: Router
   ) {}
 
+
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
-      // Fetch employee details
       this.employeeService.getEmployeeById(id).subscribe((data) => {
-        this.employee = data;
+        console.log("Fetched Employee Data:", JSON.stringify(data, null, 2));
+  
+        if (data) {
+          this.employee = data;
+  
+          // Use type assertion to bypass TypeScript errors
+          const employeeData: any = data;
+          this.employee.program_name = employeeData.programs?.map((p: any) => p.program_name).join(', ') || 'N/A';
+          this.employee.area_of_expertise = employeeData.programs?.map((p: any) => p.expertise_area).join(', ') || 'N/A';
+        } else {
+          console.error("No employee data found!");
+        }
       });
-
-      // Fetch employees under this manager
+  
       this.employeeService.getEmployeesUnderManager(id).subscribe((data) => {
-        this.subordinates = data;
+        console.log("Fetched Subordinates Data:", JSON.stringify(data, null, 2));
+  
+        this.subordinates = data.map(sub => {
+          const subData: any = sub;
+          return {
+            ...sub,
+            program_name: subData.programs?.map((p: any) => p.program_name).join(', ') || 'N/A',
+            area_of_expertise: subData.programs?.map((p: any) => p.expertise_area).join(', ') || 'N/A',
+          };
+        });
       });
+    } else {
+      console.error("No employee ID found in route!");
     }
   }
-
+  
+  
   modifyEmployee(id?: string): void {
     const employeeId = id || this.employee?.company_id;
-    if (employeeId) {
-      this.router.navigate(['/modify-employee', employeeId]);
+    
+    if (!employeeId) {
+      console.error("Modify button clicked, but no valid employee ID found!", this.employee);
+      return;
     }
+  
+    console.log("Navigating to Modify Page for Employee ID:", employeeId);
+    this.router.navigate(['/modify-employee', employeeId]);
   }
+  
+  
 
   navigateToAddPage(): void {
     this.router.navigate(['/add-employee-program']);
