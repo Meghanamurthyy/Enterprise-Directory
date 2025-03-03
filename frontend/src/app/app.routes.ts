@@ -10,5 +10,5 @@ export const routes: Routes = [
   { path: 'add-employee-program', component: AddEmployeeProgramComponent },
   { path: 'modify-employee/:id', component: ModifyEmployeeComponent },
   { path: '', redirectTo: '/employees', pathMatch: 'full' },
-  { path: '**', redirectTo: '/employees' },
+  { path: '**', redirectTo: 'employees', pathMatch: 'full', data: { skipAssets: true } }
 ];

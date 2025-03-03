@@ -3,18 +3,25 @@
   justify-content: space-between;
   align-items: center;
   padding: 16px 32px;
-  background: #ff7b00;
+  background: #EF9609;
   box-shadow: 0px 5px 15px rgba(75, 75, 75, 0.1);
   border-radius: 12px;
   max-width: 90%;
   margin: 20px auto;
 }
 
-.navbar-left .logo {
-  height: 50px;
+/* .navbar-left .logo {
+  height: auto;
   width: auto;
   transition: transform 0.3s ease-in-out;
+} */
+
+.navbar-left .logo {
+  height: 50px;  
+  width: auto;
+  max-width: 120px; 
 }
+
 
 .navbar-left .logo:hover {
   transform: scale(1.05);
@@ -31,7 +38,7 @@
 }
 
 .navbar-right input:focus {
-  border-color: #ff9900;
+  border-color: #EF9609;
   box-shadow: 0px 0px 10px rgb(250, 151, 3);
 }
 

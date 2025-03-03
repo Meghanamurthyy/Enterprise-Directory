@@ -53,4 +53,8 @@ export class ModifyEmployeeComponent implements OnInit {
       },
     });
   }
+
+  onCancel(): void {
+    this.router.navigate(['/employees', this.employee.company_id]);
+  }
 }

@@ -42,8 +42,8 @@ input, textarea, select {
 
 input:focus, textarea:focus, select:focus {
   outline: none;
-  border-color: #ff6a00;
-  box-shadow: 0px 0px 8px rgba(255, 106, 0, 0.7);
+  border-color: #EF9609;
+  box-shadow: 0px 0px 8px #EF9609;
   transform: translateY(-3px);
 }
 
@@ -54,7 +54,7 @@ textarea {
 
 button {
   width: 100%;
-  background: #ff6a00;
+  background: #EF9609;
   color: #ffffff;
   border: none;
   padding: 12px;
@@ -66,7 +66,7 @@ button {
 }
 
 button:hover {
-  background: #cc5500;
+  background: #EF9609;
 }
 
 /* Responsive Design */
