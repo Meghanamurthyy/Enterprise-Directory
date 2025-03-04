@@ -1,17 +1,9 @@
 <nav class="navbar">
-    <div class="navbar-left">
-      <img src="assets/images/te-icon.png" alt="Company Logo" class="logo">
+  <div class="navbar-left">
+    <img src="assets/images/te-icon.png" alt="Company Logo" class="logo">
 
-    </div>
-    <div class="navbar-right">
-      <input 
-      type="text" 
-      placeholder="Search Employee by ID" 
-      (keyup.enter)="onSearch($event)"
-    >
-    
-
-
-    </div>
-  </nav>
-
+  </div>
+  <div class="navbar-right">
+    <input type="text" placeholder="Search Employee by ID" (input)="onSearch($event)">
+  </div>
+</nav>
