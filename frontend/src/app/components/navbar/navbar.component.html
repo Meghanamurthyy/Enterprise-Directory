@@ -4,6 +4,14 @@
 
     </div>
     <div class="navbar-right">
-      <input type="text" placeholder="Search Employee by ID" (input)="onSearch($event)">
+      <input 
+      type="text" 
+      placeholder="Search Employee by ID" 
+      (keyup.enter)="onSearch($event)"
+    >
+    
+
+
     </div>
   </nav>
+
