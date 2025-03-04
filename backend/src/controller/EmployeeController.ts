@@ -523,15 +523,13 @@ public getEmployeeManagers: RequestHandler = async (req: Request, res: Response)
 
 
     // search functionality by id
-    public searchById: RequestHandler = async (req: Request, res: Response): Promise<void> => {
+   public searchById: RequestHandler = async (req: Request, res: Response): Promise<void> => {
   try {
     const { id } = req.params; // Employee ID
     const db = (req as any).db;
 
-    // Fetch the manager_id for the given employee ID
-    const managerQuery = `
-      SELECT manager_id FROM Employees WHERE TE_ID = ?;
-    `;
+    // Step 1: Find the manager of the given employee (or check if they are a manager)
+    const managerQuery = `SELECT manager_id FROM Employees WHERE TE_ID = ?;`;
     const employee = await db.get(managerQuery, [id]);
 
     if (!employee) {
@@ -539,9 +537,79 @@ public getEmployeeManagers: RequestHandler = async (req: Request, res: Response)
       return;
     }
 
-    const managerId = employee.manager_id || id; // If no manager, use the employee ID as manager
+    const managerId = employee.manager_id || id; // If the person is already a manager, use their ID
 
-    // Now call the existing getEmployeeByManagerId logic using managerId
+    // Step 2: Get details of the manager (or employee themselves if they are a manager)
+    const managerDetailsQuery = `
+      SELECT 
+        e.TE_ID, 
+        e.first_name, 
+        e.last_name, 
+        e.email, 
+        e.phone_number, 
+        e.date_of_joining, 
+        e.manager_id,
+        ep.program_id, 
+        ep.expertise_area, 
+        ep.sme_status,
+        p.program_name, 
+        p.program_description 
+      FROM Employees e
+      LEFT JOIN Employee_Programs ep ON e.TE_ID = ep.TE_ID
+      LEFT JOIN Programs p ON ep.program_id = p.program_id
+      WHERE e.TE_ID = ?;
+    `;
+
+
+    type EmployeeRow = {
+      TE_ID: string;
+      first_name: string;
+      last_name: string;
+      email: string;
+      phone_number: string | null;
+      date_of_joining: string;
+      manager_id: string | null;
+      program_id: string | null;
+      expertise_area: string | null;
+      sme_status: boolean | null;
+      program_name: string | null;
+      program_description: string | null;
+    };
+
+
+
+    const managerRows = await db.all(managerDetailsQuery, [managerId]);
+
+    if (!managerRows.length) {
+      res.status(404).json({ message: 'Manager not found.' });
+      return;
+    }
+
+    // Construct manager's details
+    const manager: any = {
+      company_id: managerId,
+      first_name: managerRows[0].first_name,
+      last_name: managerRows[0].last_name,
+      email: managerRows[0].email,
+      phone_number: managerRows[0].phone_number,
+      date_of_joining: managerRows[0].date_of_joining,
+      manager_id: managerRows[0].manager_id,
+      programs: []
+    };
+
+    managerRows.forEach((row:EmployeeRow) => {
+      if (row.program_id) {
+        manager.programs.push({
+          program_id: row.program_id,
+          area_of_expertise: row.expertise_area,
+          sme_status: row.sme_status,
+          program_name: row.program_name,
+          program_description: row.program_description
+        });
+      }
+    });
+
+    // Step 3: Get all employees under this manager
     const employeesQuery = `
       SELECT 
         e.TE_ID, 
@@ -562,63 +630,60 @@ public getEmployeeManagers: RequestHandler = async (req: Request, res: Response)
       WHERE e.manager_id = ?;
     `;
 
-    const rows: {
-      TE_ID: string;
-      first_name: string;
-      last_name: string;
-      email: string;
-      phone_number: string | null;
-      date_of_joining: string;
-      manager_id: string | null;
-      program_id: string | null;
-      expertise_area: string | null;
-      sme_status: boolean | null;
-      program_name: string | null;
-      program_description: string | null;
-    }[] = await db.all(employeesQuery, [managerId]);
-
-    if (rows.length === 0) {
-      res.status(404).json({ message: 'No employees found for this manager ID' });
-      return;
-    }
+    const employeeRows = await db.all(employeesQuery, [managerId]);
 
     // Group employees by TE_ID
-    const employeesMap: Record<string, any> = {};
+    const employees: any[] = [];
 
-    rows.forEach((row) => {
-      const { TE_ID, first_name, last_name, email, phone_number, date_of_joining, manager_id, program_id, expertise_area, sme_status, program_name, program_description } = row;
+    employeeRows.forEach((row:EmployeeRow) => {
+      const existingEmployee = employees.find((emp) => emp.company_id === row.TE_ID);
 
-      if (!employeesMap[TE_ID]) {
-        employeesMap[TE_ID] = {
-          company_id: TE_ID,
-          first_name,
-          last_name,
-          email,
-          phone_number,
-          date_of_joining,
-          manager_id,
-          programs: []
-        };
-      }
-
-      if (program_id) {
-        employeesMap[TE_ID].programs.push({
-          program_id,
-          area_of_expertise: expertise_area,
-          sme_status,
-          program_name,
-          program_description
+      if (!existingEmployee) {
+        employees.push({
+          company_id: row.TE_ID,
+          first_name: row.first_name,
+          last_name: row.last_name,
+          email: row.email,
+          phone_number: row.phone_number,
+          date_of_joining: row.date_of_joining,
+          manager_id: row.manager_id,
+          programs: row.program_id
+            ? [
+                {
+                  program_id: row.program_id,
+                  area_of_expertise: row.expertise_area,
+                  sme_status: row.sme_status,
+                  program_name: row.program_name,
+                  program_description: row.program_description
+                }
+              ]
+            : []
         });
+      } else {
+        // If employee exists, just add their program
+        if (row.program_id) {
+          existingEmployee.programs.push({
+            program_id: row.program_id,
+            area_of_expertise: row.expertise_area,
+            sme_status: row.sme_status,
+            program_name: row.program_name,
+            program_description: row.program_description
+          });
+        }
       }
     });
 
-    const employeesList = Object.values(employeesMap);
-    res.status(200).json(employeesList);
+    // Send response with separate sections
+    res.status(200).json({
+      manager,
+      employees
+    });
   } catch (error) {
     console.error('Error in searchById:', error);
     res.status(500).json({ message: 'Internal Server Error', error });
   }
 };
+
 
 }
 
