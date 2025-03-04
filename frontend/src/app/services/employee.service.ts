@@ -39,4 +39,9 @@ export class EmployeeService {
   updateEmployee(employee: Employee): Observable<Employee> {
     return this.http.put<Employee>(`${this.apiUrl}/programs/updateEmployeeProgram`, employee);
   }
+
+  getEmployeebySearch(id: string): Observable<Employee[]> {
+    return this.http.get<Employee[]>(`${this.apiUrl}/employees/searchById/${id}`);
+
+  }
 }
