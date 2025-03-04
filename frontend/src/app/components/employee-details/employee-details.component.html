@@ -20,7 +20,7 @@
     <p><strong>Date of Joining:</strong> {{ subordinate.date_of_joining | date }}</p>
     <p><strong>Program Name:</strong> {{ subordinate.program_name }}</p>
     <p><strong>Area of Expertise:</strong> {{ subordinate.area_of_expertise }}</p>
-    <p><strong>SME Status:</strong> {{ subordinate.sme_status ? 'Yes' : 'No' }}</p>
+    <p><strong>SME Status:</strong> {{ subordinate.sme_status}}</p>
     <button (click)="modifyEmployee(subordinate.company_id)">Modify</button>
   </div>
 </div>

@@ -34,7 +34,8 @@ export class EmployeeDetailsComponent implements OnInit {
           // Use type assertion to bypass TypeScript errors
           const employeeData: any = data;
           this.employee.program_name = employeeData.programs?.map((p: any) => p.program_name).join(', ') || 'N/A';
-          this.employee.area_of_expertise = employeeData.programs?.map((p: any) => p.expertise_area).join(', ') || 'N/A';
+          this.employee.area_of_expertise = employeeData.programs?.map((p: any) => p.area_of_expertise).join(', ') || 'N/A';
+          this.employee.sme_status=employeeData.programs?.map((p: any) => p.sme_status).join(', ') || 'N/A';
         } else {
           console.error("No employee data found!");
         }
@@ -48,7 +49,8 @@ export class EmployeeDetailsComponent implements OnInit {
           return {
             ...sub,
             program_name: subData.programs?.map((p: any) => p.program_name).join(', ') || 'N/A',
-            area_of_expertise: subData.programs?.map((p: any) => p.expertise_area).join(', ') || 'N/A',
+            area_of_expertise: subData.programs?.map((p: any) => p.area_of_expertise).join(', ') || 'N/A',
+            sme_status: subData.programs?.map((p: any) => p.sme_status).join(', ') || 'N/A',
           };
         });
       });
