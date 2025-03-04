@@ -200,6 +200,7 @@ export class EmployeeDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+// <<<<<<< HEAD
     const company_id = this.route.snapshot.paramMap.get('company_id'); // Use company_id instead of id
     if (company_id) {
       // Fetch employee details by company_id
@@ -227,7 +228,7 @@ export class EmployeeDetailsComponent implements OnInit {
         },
       });
 
-      // Fetch employees under this manager (if applicable)
+      // Fetch employees under this manager (if applicable) 
       this.employeeService.getEmployeesUnderManager(company_id).subscribe({
         next: (data) => {
           console.log("Fetched Subordinates Data:", JSON.stringify(data, null, 2));
@@ -243,6 +244,38 @@ export class EmployeeDetailsComponent implements OnInit {
         error: (error) => {
           console.error("Error fetching subordinates:", error);
         },
+// =======
+    // const id = this.route.snapshot.paramMap.get('id');
+    // if (id) {
+    //   this.employeeService.getEmployeeById(id).subscribe((data) => {
+    //     console.log("Fetched Employee Data:", JSON.stringify(data, null, 2));
+  
+    //     if (data) {
+    //       this.employee = data;
+  
+    //       // Use type assertion to bypass TypeScript errors
+    //       const employeeData: any = data;
+    //       this.employee.program_name = employeeData.programs?.map((p: any) => p.program_name).join(', ') || 'N/A';
+    //       this.employee.area_of_expertise = employeeData.programs?.map((p: any) => p.area_of_expertise).join(', ') || 'N/A';
+    //       this.employee.sme_status=employeeData.programs?.map((p: any) => p.sme_status).join(', ') || 'N/A';
+    //     } else {
+    //       console.error("No employee data found!");
+    //     }
+    //   });
+  
+    //   this.employeeService.getEmployeesUnderManager(id).subscribe((data) => {
+    //     console.log("Fetched Subordinates Data:", JSON.stringify(data, null, 2));
+  
+    //     this.subordinates = data.map(sub => {
+    //       const subData: any = sub;
+    //       return {
+    //         ...sub,
+    //         program_name: subData.programs?.map((p: any) => p.program_name).join(', ') || 'N/A',
+    //         area_of_expertise: subData.programs?.map((p: any) => p.area_of_expertise).join(', ') || 'N/A',
+    //         sme_status: subData.programs?.map((p: any) => p.sme_status).join(', ') || 'N/A',
+    //       };
+    //     });
+// >>>>>>> da39c005c73de193303961f598de7eab35b4b6ff
       });
     } else {
       console.error("No company_id found in route!");

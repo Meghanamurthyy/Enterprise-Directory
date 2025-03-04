@@ -1,31 +1,8 @@
 import xlsx from 'xlsx';
 import fs from 'fs';
 import db from '../utils/db.utils';
+import { EmployeeRow, ProgramRow, EmployeeProgramRow } from '../models/models';
 
-interface EmployeeRow {
-    TE_ID: number;
-    first_name: string;
-    last_name?: string;
-    email: string;
-    phone_number?: string;
-    date_of_joining: string;
-    manager_id?: number;
-}
-
-interface ProgramRow {
-    program_id: number;
-    program_name: string;
-    program_description?: string;
-    start_date?: string;
-    end_date?: string;
-}
-
-interface EmployeeProgramRow {
-    TE_ID: number;
-    program_id: number;
-    expertise_area?: string;
-    sme_status?: string;
-}
 
 const processFile = async (filePath: string): Promise<string> => {
     const workbook = xlsx.readFile(filePath);
