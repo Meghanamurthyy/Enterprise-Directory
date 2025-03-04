@@ -15,6 +15,10 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./add-employee-program.component.css'],
 })
 export class AddEmployeeProgramComponent implements OnInit {
+  showCreateProgram = false;
+  showAssignProgram = false;
+  showCreateEmployee = false;
+
   newProgram: Program = {
     program_id: '',
     program_name: '',
@@ -47,6 +51,17 @@ export class AddEmployeeProgramComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  // Toggle forms visibility
+  toggleForm(formType: string): void {
+    if (formType === 'program') {
+      this.showCreateProgram = !this.showCreateProgram;
+    } else if (formType === 'assign') {
+      this.showAssignProgram = !this.showAssignProgram;
+    } else if (formType === 'employee') {
+      this.showCreateEmployee = !this.showCreateEmployee;
+    }
+  }
+
   // to handle Create Program Form Submission
   onCreateProgramSubmit(): void {
     this.employeeService.createProgram(this.newProgram).subscribe({
@@ -59,6 +74,7 @@ export class AddEmployeeProgramComponent implements OnInit {
           start_date: '',
           end_date: '',
         };
+        this.showCreateProgram = false; // Hide form after submission
       },
       error: (error: HttpErrorResponse) => {
         alert('Error creating program: ' + error.message);
@@ -80,6 +96,7 @@ export class AddEmployeeProgramComponent implements OnInit {
             area_of_expertise: '',
             sme_status: '',
           };
+          this.showAssignProgram = false; // Hide form after submission
         },
         error: (error: HttpErrorResponse) => {
           alert('Error assigning program: ' + error.message);
@@ -104,6 +121,7 @@ export class AddEmployeeProgramComponent implements OnInit {
           area_of_expertise: '',
           sme_status: '',
         };
+        this.showCreateEmployee = false; // Hide form after submission
       },
       error: (error: HttpErrorResponse) => {
         alert('Error creating employee: ' + error.message);
