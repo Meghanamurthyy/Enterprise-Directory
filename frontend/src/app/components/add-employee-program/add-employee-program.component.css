@@ -52,27 +52,50 @@ textarea {
   min-height: 80px;
 }
 
+/* Button Styling */
+.button-group {
+  display: flex;
+  flex-direction: column; /* Vertical layout */
+  align-items: center; /* Center align buttons */
+  gap: 15px; /* Space between buttons */
+}
+
 button {
-  width: 100%;
-  background: #EF9609;
+  background: linear-gradient(135deg, #EF9609, #D87C06);
   color: #ffffff;
   border: none;
-  padding: 12px;
-  margin-top: 15px;
+  padding: 12px 20px;
+  padding-left: 10px;
   font-size: 18px;
-  border-radius: 5px;
+  font-weight: bold;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0px 4px 8px rgba(239, 150, 9, 0.3);
+  width: 80%; /* Make buttons uniform width */
+  max-width: 250px; /* Prevent overly wide buttons */
+  text-align: center;
 }
 
 button:hover {
-  background: #EF9609;
+  background: linear-gradient(135deg, #D87C06, #BF6905);
+  box-shadow: 0px 6px 12px rgba(239, 150, 9, 0.5);
+  transform: translateY(-2px);
+}
+
+button:active {
+  transform: translateY(1px);
+  box-shadow: 0px 2px 6px rgba(239, 150, 9, 0.3);
 }
 
 /* Responsive Design */
 @media (max-width: 600px) {
   .add-employee-program {
     padding: 15px;
+  }
+
+  .button-group {
+    gap: 10px; /* Reduce space on smaller screens */
   }
 
   input, textarea, select, button {

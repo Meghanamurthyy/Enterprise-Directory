@@ -1,8 +1,13 @@
 <div class="add-employee-program">
   <h2>Add Employee / Program</h2>
 
+  <!-- Buttons to Show Forms -->
+  <button (click)="toggleForm('program')">Create Program</button>
+  <button (click)="toggleForm('assign')">Assign Program</button>
+  <button (click)="toggleForm('employee')">Create Employee</button>
+
   <!-- Create Program Form -->
-  <form (ngSubmit)="onCreateProgramSubmit()">
+  <form *ngIf="showCreateProgram" (ngSubmit)="onCreateProgramSubmit()">
     <h3>Create Program</h3>
     <label for="program_id">Program ID:</label>
     <input id="program_id" name="program_id" [(ngModel)]="newProgram.program_id" required>
@@ -20,10 +25,11 @@
     <input id="end_date" name="end_date" type="date" [(ngModel)]="newProgram.end_date" required>
 
     <button type="submit">Create Program</button>
+    <button type="button" (click)="toggleForm('program')">Cancel</button>
   </form>
 
   <!-- Assign Program Form -->
-  <form (ngSubmit)="onAssignProgramSubmit()">
+  <form *ngIf="showAssignProgram" (ngSubmit)="onAssignProgramSubmit()">
     <h3>Assign Program</h3>
     <label for="assign_program_id">Program ID:</label>
     <input id="assign_program_id" name="assign_program_id" [(ngModel)]="assignProgram.program_id" required>
@@ -41,10 +47,11 @@
     </select>
 
     <button type="submit">Assign Program</button>
+    <button type="button" (click)="toggleForm('assign')">Cancel</button>
   </form>
 
   <!-- Create Employee Form -->
-  <form (ngSubmit)="onCreateEmployeeSubmit()">
+  <form *ngIf="showCreateEmployee" (ngSubmit)="onCreateEmployeeSubmit()">
     <h3>Create Employee</h3>
     <label for="employee_company_id">Company ID:</label>
     <input id="employee_company_id" name="employee_company_id" [(ngModel)]="newEmployee.company_id" required>
@@ -68,5 +75,6 @@
     <input id="manager_id" name="manager_id" [(ngModel)]="newEmployee.manager_id" required>
 
     <button type="submit">Create Employee</button>
+    <button type="button" (click)="toggleForm('employee')">Cancel</button>
   </form>
 </div>
