@@ -4,6 +4,12 @@
 
   </div>
   <div class="navbar-right">
-    <input type="text" placeholder="Search Employee by ID" (input)="onSearch($event)">
+    <!-- <input type="text" placeholder="Search Employee by ID" (input)="onSearch($event)"> -->
+    <input
+    type="text"
+    placeholder="Search Employee by TE ID"
+    [(ngModel)]="searchQuery"
+    (keyup.enter)="onSearch()"
+  >
   </div>
 </nav>

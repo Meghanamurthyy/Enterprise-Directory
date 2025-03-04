@@ -22,8 +22,8 @@ export class EmployeeListComponent implements OnInit {
       console.log(data);
     });
   }
-  viewEmployee(id: string): void {
-    this.router.navigate(['/employees', id]); // Correct way to navigate
+  viewEmployee(company_id: string): void {
+    this.router.navigate(['/employees', company_id]); // Correct way to navigate
   }
   
 }

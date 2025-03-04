@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Employee } from '../models/employee.model';
 import { Program } from '../models/program.model';
 
@@ -40,8 +41,9 @@ export class EmployeeService {
     return this.http.put<Employee>(`${this.apiUrl}/programs/updateEmployeeProgram`, employee);
   }
 
-  getEmployeebySearch(id: string): Observable<Employee[]> {
-    return this.http.get<Employee[]>(`${this.apiUrl}/employees/searchById/${id}`);
-
+  getEmployeebyCompanyId(company_id: string): Observable<Employee> {
+    return this.http.get<Employee[]>(`${this.apiUrl}/employees?company_id=${company_id}`).pipe(
+      map((employees) => employees[0]) 
+    );
   }
 }
