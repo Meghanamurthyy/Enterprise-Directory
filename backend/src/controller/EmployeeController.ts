@@ -167,9 +167,11 @@ class EmployeeController {
        
 
         res.status(200).json(rows); // owSend all employees as a JSON response
+         return;
     } catch (error) {
         console.error('Error fetching all employees:', error);
         res.status(500).json({ message: 'Internal Server Error', error });
+         return;
     }
 };
 
@@ -232,9 +234,11 @@ public getEmployeeByTeid: RequestHandler = async (req: Request, res: Response): 
         // };
 
         res.status(200).json(response);
+         return;
     } catch (error) {
         console.error('Error in getEmployeeByTeid:', error);
         res.status(500).json({ message: 'Internal Server Error', error });
+         return;
     }
 };
 
@@ -273,9 +277,11 @@ public getEmployeeByTeid: RequestHandler = async (req: Request, res: Response): 
       }
 
       res.status(200).json({ message: 'Employee updated successfully' });
+       return;
     } catch (error) {
       console.error('Error updating employee:', error);
       res.status(500).json({ message: 'Internal Server Error', error });
+       return;
     }
   };
 // get manager unique
@@ -344,9 +350,12 @@ public getEmployeeManagers: RequestHandler = async (req: Request, res: Response)
     const managersList = Object.values(managersMap);
     
     res.status(200).json(managersList);
+     return;
+    return;
   } catch (error) {
     console.error('Error fetching managers with programs:', error);
     res.status(500).json({ message: 'Internal Server Error', error });
+    return;
   }
 };
 
@@ -395,6 +404,7 @@ public getEmployeeManagers: RequestHandler = async (req: Request, res: Response)
 
     if (rows.length === 0) {
        res.status(404).json({ message: 'No employees found for this manager ID' });
+       return;
     }
 
     // console.log(rows);
@@ -432,9 +442,11 @@ public getEmployeeManagers: RequestHandler = async (req: Request, res: Response)
     const employeesList = Object.values(employeesMap);
     // console.log(employeesList);
     res.status(200).json(employeesList);
+     return;
   } catch (error) {
     console.error('Error fetching employees by manager ID:', error);
     res.status(500).json({ message: 'Internal Server Error', error });
+    return;
   }
 };
 
@@ -455,6 +467,7 @@ public getEmployeeManagers: RequestHandler = async (req: Request, res: Response)
      // Check if insert was successful (SQLite `run` returns `{ changes: 1 }` for success)
     if (result.changes === 0) {
        res.status(500).json({ message: 'Failed to insert employee' });
+        return;
     }
 
     // Construct the response manually only if the insert was successful
@@ -469,9 +482,11 @@ public getEmployeeManagers: RequestHandler = async (req: Request, res: Response)
     };
       
       res.status(200).json({ message: 'Employee created successfully',insertedEmployee});
+       return;
     } catch (error) {
       console.error('Error creating employee:', error);
       res.status(500).json({ message: 'Internal Server Error', error });
+       return;
     }
 };
   
@@ -515,9 +530,11 @@ public getEmployeeManagers: RequestHandler = async (req: Request, res: Response)
         };
   
         res.status(200).json({ message: 'Employee created successfully', insertedEmployee });
+         return;
       } catch (error) {
         console.error('Error adding employee using manager ID:', error);
         res.status(500).json({ message: 'Internal Server Error', error });
+         return;
       }
     };
 
@@ -678,9 +695,11 @@ public getEmployeeManagers: RequestHandler = async (req: Request, res: Response)
       manager,
       employees
     });
+     return;
   } catch (error) {
     console.error('Error in searchById:', error);
     res.status(500).json({ message: 'Internal Server Error', error });
+     return;
   }
 };
 

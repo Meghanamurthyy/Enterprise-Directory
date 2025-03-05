@@ -221,9 +221,11 @@ class ProgramController {
       );
 
       res.status(201).json({ message: 'Program created successfully', program_id });
+       return;
     } catch (error) {
       console.error('Error creating program:', error);
       res.status(500).json({ message: 'Internal Server Error', error });
+       return;
     }
 };
 
@@ -253,9 +255,11 @@ class ProgramController {
       );
 
       res.status(201).json({ message: 'Employee assigned to program successfully', program_id });
+       return;
     } catch (error) {
       console.error('Error assigning employee to program:', error);
       res.status(500).json({ message: 'Internal Server Error', error });
+       return;
     }
 };
 
@@ -263,6 +267,7 @@ class ProgramController {
   // Update employee program details
   public updateEmployeeProgram: RequestHandler = async (req: Request, res: Response): Promise<void> => {
     try {
+      console.log(req.body)
       const { company_id, program_id, area_of_expertise, sme_status } = req.body;
       const TE_ID = company_id;
       const expertise_area = area_of_expertise;
@@ -287,9 +292,11 @@ class ProgramController {
       }
 
       res.status(200).json({ message: 'Employee program updated successfully' });
+       return;
     } catch (error) {
       console.error('Error updating employee program:', error);
       res.status(500).json({ message: 'Internal Server Error', error });
+       return;
     }
   };
 
@@ -336,9 +343,11 @@ public getEmployeesByProgram: RequestHandler = async (req: Request, res: Respons
         }
 
         res.status(200).json({ message: 'Employees found', program, employees });
+         return;
     } catch (error) {
         console.error('Error fetching employees by program:', error);
         res.status(500).json({ message: 'Internal Server Error', error });
+         return;
     }
 };
 
