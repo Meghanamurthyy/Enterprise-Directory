@@ -204,7 +204,7 @@ export class EmployeeDetailsComponent implements OnInit {
     const company_id = this.route.snapshot.paramMap.get('company_id'); // Use company_id instead of id
     if (company_id) {
       // Fetch employee details by company_id
-      this.employeeService.getEmployeebyCompanyId(company_id).subscribe({
+      this.employeeService.getEmployeeById(company_id).subscribe({
         next: (data) => {
           console.log("Fetched Employee Data:", JSON.stringify(data, null, 2));
 

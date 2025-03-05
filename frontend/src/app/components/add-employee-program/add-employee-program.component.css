@@ -55,9 +55,10 @@ textarea {
 /* Button Styling */
 .button-group {
   display: flex;
-  flex-direction: column; /* Vertical layout */
+  /* flex-direction: ; Vertical layout */
   align-items: center; /* Center align buttons */
-  gap: 15px; /* Space between buttons */
+  gap: 20px; /* Space between buttons */
+  justify-content: center;
 }
 
 button {
@@ -75,7 +76,10 @@ button {
   width: 80%; /* Make buttons uniform width */
   max-width: 250px; /* Prevent overly wide buttons */
   text-align: center;
+  
 }
+
+
 
 button:hover {
   background: linear-gradient(135deg, #D87C06, #BF6905);
@@ -86,6 +90,14 @@ button:hover {
 button:active {
   transform: translateY(1px);
   box-shadow: 0px 2px 6px rgba(239, 150, 9, 0.3);
+}
+
+/* Group form buttons and space them */
+.form-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px; /* Adds gap above buttons */
 }
 
 /* Responsive Design */

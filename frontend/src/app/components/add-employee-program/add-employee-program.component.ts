@@ -52,15 +52,33 @@ export class AddEmployeeProgramComponent implements OnInit {
   ngOnInit(): void {}
 
   // Toggle forms visibility
-  toggleForm(formType: string): void {
-    if (formType === 'program') {
-      this.showCreateProgram = !this.showCreateProgram;
-    } else if (formType === 'assign') {
-      this.showAssignProgram = !this.showAssignProgram;
-    } else if (formType === 'employee') {
-      this.showCreateEmployee = !this.showCreateEmployee;
-    }
+  // toggleForm(formType: string): void {
+  //   if (formType === 'program') {
+  //     this.showCreateProgram = !this.showCreateProgram;
+  //   } else if (formType === 'assign') {
+  //     this.showAssignProgram = !this.showAssignProgram;
+  //   } else if (formType === 'employee') {
+  //     this.showCreateEmployee = !this.showCreateEmployee;
+  //   }
+  // }
+  
+ toggleForm(formType: string): void {
+  if (formType === 'program') {
+    this.showCreateProgram = !this.showCreateProgram;
+    this.showAssignProgram = false;
+    this.showCreateEmployee = false;
+  } else if (formType === 'assign') {
+    this.showAssignProgram = !this.showAssignProgram;
+    this.showCreateProgram = false;
+    this.showCreateEmployee = false;
+  } else if (formType === 'employee') {
+    this.showCreateEmployee = !this.showCreateEmployee;
+    this.showCreateProgram = false;
+    this.showAssignProgram = false;
   }
+}
+
+
 
   // to handle Create Program Form Submission
   onCreateProgramSubmit(): void {

@@ -1,10 +1,11 @@
 <div class="add-employee-program">
   <h2>Add Employee / Program</h2>
-
+  <div class="button-group">
   <!-- Buttons to Show Forms -->
   <button (click)="toggleForm('program')">Create Program</button>
   <button (click)="toggleForm('assign')">Assign Program</button>
   <button (click)="toggleForm('employee')">Create Employee</button>
+  </div>
 
   <!-- Create Program Form -->
   <form *ngIf="showCreateProgram" (ngSubmit)="onCreateProgramSubmit()">
@@ -23,9 +24,10 @@
 
     <label for="end_date">End Date:</label>
     <input id="end_date" name="end_date" type="date" [(ngModel)]="newProgram.end_date" required>
-
+    <div class="form-buttons">
     <button type="submit">Create Program</button>
     <button type="button" (click)="toggleForm('program')">Cancel</button>
+    </div>
   </form>
 
   <!-- Assign Program Form -->
@@ -45,9 +47,10 @@
       <option value="true">Yes</option>
       <option value="false">No</option>
     </select>
-
+    <div class="form-buttons">
     <button type="submit">Assign Program</button>
     <button type="button" (click)="toggleForm('assign')">Cancel</button>
+    </div>
   </form>
 
   <!-- Create Employee Form -->
@@ -73,8 +76,11 @@
 
     <label for="manager_id">Manager ID:</label>
     <input id="manager_id" name="manager_id" [(ngModel)]="newEmployee.manager_id" required>
-
+    
+    <div class="form-buttons">
     <button type="submit">Create Employee</button>
     <button type="button" (click)="toggleForm('employee')">Cancel</button>
+    </div>
+
   </form>
 </div>
