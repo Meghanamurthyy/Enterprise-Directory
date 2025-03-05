@@ -8,7 +8,7 @@
   <p><strong>Program Name:</strong> {{ employee.program_name }}</p>
   <p><strong>Area of Expertise:</strong> {{ employee.area_of_expertise }}</p>
   <p><strong>SME Status:</strong> {{ employee.sme_status ? 'Yes' : 'No' }}</p>
-  <button (click)="modifyEmployee()">Modify</button>
+  <!-- <button (click)="modifyEmployee()">Modify</button> -->
 </div>
 
 <div class="subordinates" *ngIf="subordinates.length > 0">
@@ -21,7 +21,7 @@
     <p><strong>Program Name:</strong> {{ subordinate.program_name }}</p>
     <p><strong>Area of Expertise:</strong> {{ subordinate.area_of_expertise }}</p>
     <p><strong>SME Status:</strong> {{ subordinate.sme_status}}</p>
-    <button (click)="modifyEmployee(subordinate.company_id)">Modify</button>
+    <!-- <button (click)="modifyEmployee(subordinate.company_id)">Modify</button> -->
   </div>
 </div>
 

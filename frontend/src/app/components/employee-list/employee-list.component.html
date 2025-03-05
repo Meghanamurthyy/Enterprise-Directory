@@ -1,4 +1,5 @@
 <div class="employee-list">
+  <h1>MANAGERS</h1>
     <div *ngFor="let employee of employees" class="employee-item">
       <span>{{ employee.company_id }} - {{ employee.first_name }} {{ employee.last_name }}</span>
       <button (click)="viewEmployee(employee.company_id)">View</button>

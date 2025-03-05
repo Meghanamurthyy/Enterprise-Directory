@@ -18,6 +18,7 @@ export class AddEmployeeProgramComponent implements OnInit {
   showCreateProgram = false;
   showAssignProgram = false;
   showCreateEmployee = false;
+   showModifyEmployeeProgram = false;
 
   newProgram: Program = {
     program_id: '',
@@ -47,6 +48,14 @@ export class AddEmployeeProgramComponent implements OnInit {
     sme_status: '',
   };
 
+   modifyEmployeeProgramData: any = { // New object for modifying employee program
+    company_id: '',
+    program_id: '',
+    area_of_expertise: '',
+    sme_status: 'No',
+  };
+  
+
   constructor(private employeeService: EmployeeService, private router: Router) {}
 
   ngOnInit(): void {}
@@ -67,14 +76,23 @@ export class AddEmployeeProgramComponent implements OnInit {
     this.showCreateProgram = !this.showCreateProgram;
     this.showAssignProgram = false;
     this.showCreateEmployee = false;
+    this.showModifyEmployeeProgram = false;
   } else if (formType === 'assign') {
     this.showAssignProgram = !this.showAssignProgram;
     this.showCreateProgram = false;
     this.showCreateEmployee = false;
+    this.showModifyEmployeeProgram = false;
   } else if (formType === 'employee') {
     this.showCreateEmployee = !this.showCreateEmployee;
     this.showCreateProgram = false;
     this.showAssignProgram = false;
+    this.showModifyEmployeeProgram = false;
+  }
+  else if(formType === 'modify') {
+    this.showModifyEmployeeProgram = !this.showModifyEmployeeProgram;
+    this.showCreateProgram = false;
+    this.showAssignProgram = false;
+    this.showCreateEmployee = false;
   }
 }
 
@@ -146,4 +164,23 @@ export class AddEmployeeProgramComponent implements OnInit {
       },
     });
   }
+
+   // Modify Employee Program Form Submission
+  onModifyEmployeeProgramSubmit(): void {
+      const { company_id, program_id, area_of_expertise, sme_status } = this.modifyEmployeeProgramData;
+      this.employeeService.updateEmployee(company_id, program_id, area_of_expertise, sme_status).subscribe({
+    next: () => {
+      alert('Employee program updated successfully!');
+      this.modifyEmployeeProgramData = {
+        company_id: '',
+        program_id: '',
+        area_of_expertise: '',
+        sme_status: '',
+      };
+    },
+    error: (error) => {
+      alert('Error updating employee program: ' + error.message);
+    },
+  });
+}
 }

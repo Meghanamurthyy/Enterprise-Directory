@@ -43,15 +43,15 @@ export class ModifyEmployeeComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.employeeService.updateEmployee(this.employee).subscribe({
-      next: (response) => {
-        alert('Employee updated successfully!');
-        this.router.navigate(['/employees', this.employee.company_id]);
-      },
-      error: (error) => {
-        alert('Error updating employee: ' + error.message);
-      },
-    });
+    // this.employeeService.updateEmployee(this.employee).subscribe({
+    //   next: (response) => {
+    //     alert('Employee updated successfully!');
+    //     this.router.navigate(['/employees', this.employee.company_id]);
+    //   },
+    //   error: (error) => {
+    //     alert('Error updating employee: ' + error.message);
+    //   },
+    // });
   }
 
   onCancel(): void {

@@ -5,6 +5,7 @@
   <button (click)="toggleForm('program')">Create Program</button>
   <button (click)="toggleForm('assign')">Assign Program</button>
   <button (click)="toggleForm('employee')">Create Employee</button>
+  <button (click)="toggleForm('modify')">Update Employee Program</button>
   </div>
 
   <!-- Create Program Form -->
@@ -44,8 +45,8 @@
 
     <label for="sme_status">SME Status:</label>
     <select id="sme_status" name="sme_status" [(ngModel)]="assignProgram.sme_status" required>
-      <option value="true">Yes</option>
-      <option value="false">No</option>
+      <option value="Yes">Yes</option>
+      <option value="No">No</option>
     </select>
     <div class="form-buttons">
     <button type="submit">Assign Program</button>
@@ -83,4 +84,29 @@
     </div>
 
   </form>
+
+  <!-- Modify Employee Program Form -->
+<form *ngIf="showModifyEmployeeProgram" (ngSubmit)="onModifyEmployeeProgramSubmit()">
+  <h3>Modify Employee Program</h3>
+  
+  <label for="modify_company_id">Company ID:</label>
+  <input id="modify_company_id" name="modify_company_id" [(ngModel)]="modifyEmployeeProgramData.company_id" required>
+
+  <label for="modify_program_id">Program ID:</label>
+  <input id="modify_program_id" name="modify_program_id" [(ngModel)]="modifyEmployeeProgramData.program_id" required>
+
+  <label for="modify_area_of_expertise">Area of Expertise:</label>
+  <input id="modify_area_of_expertise" name="modify_area_of_expertise" [(ngModel)]="modifyEmployeeProgramData.area_of_expertise" required>
+
+  <label for="modify_sme_status">SME Status:</label>
+  <select id="modify_sme_status" name="modify_sme_status" [(ngModel)]="modifyEmployeeProgramData.sme_status" required>
+    <option value="Yes">Yes</option>
+    <option value="No">No</option>
+  </select>
+
+  <div class="form-buttons">
+    <button type="submit">Modify Employee Program</button>
+    <button type="button" (click)="toggleForm('modify')">Cancel</button>
+  </div>
+</form>
 </div>
