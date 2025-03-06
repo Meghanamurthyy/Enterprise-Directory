@@ -47,3 +47,27 @@ if (isMainModule(import.meta.url)) {
  * Request handler used by the Angular CLI (for dev-server and during build) or Firebase Cloud Functions.
  */
 export const reqHandler = createNodeRequestHandler(app);
+
+
+
+
+
+
+export function getPrerenderParams(route: string): { [key: string]: string }[] {
+  if (route === 'employees/:company_id') {
+    // Return a list of company IDs to prerender
+    return [
+      { company_id: '1' },
+      { company_id: '2' },
+      { company_id: '3' }
+    ];
+  } else if (route === 'modify-employee/:id') {
+    // Return a list of employee IDs to prerender
+    return [
+      { id: '101' },
+      { id: '102' },
+      { id: '103' }
+    ];
+  }
+  return [];
+}
