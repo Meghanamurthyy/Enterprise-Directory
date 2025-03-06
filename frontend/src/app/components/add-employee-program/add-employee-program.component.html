@@ -1,11 +1,11 @@
 <div class="add-employee-program">
   <h2>Add Employee / Program</h2>
   <div class="button-group">
-  <!-- Buttons to Show Forms -->
-  <button (click)="toggleForm('program')">Create Program</button>
-  <button (click)="toggleForm('assign')">Assign Program</button>
-  <button (click)="toggleForm('employee')">Create Employee</button>
-  <button (click)="toggleForm('modify')">Update Employee Program</button>
+    <!-- Buttons to Show Forms -->
+    <button (click)="toggleForm('program')">Create Program</button>
+    <button (click)="toggleForm('assign')">Assign Program</button>
+    <button (click)="toggleForm('employee')">Create Employee</button>
+    <button (click)="toggleForm('modify')">Update Employee Program</button>
   </div>
 
   <!-- Create Program Form -->
@@ -13,21 +13,27 @@
     <h3>Create Program</h3>
     <label for="program_id">Program ID:</label>
     <input id="program_id" name="program_id" [(ngModel)]="newProgram.program_id" required>
+    <div *ngIf="formErrors.program_id" class="error">{{ formErrors.program_id }}</div>
 
     <label for="program_name">Program Name:</label>
-    <input id="program_name" name="program_name" [(ngModel)]="newProgram.program_name" required>
+    <input id="program_name" name="program_name" [(ngModel)]="newProgram.program_name" required minlength="3">
+    <div *ngIf="formErrors.program_name" class="error">{{ formErrors.program_name }}</div>
 
     <label for="description">Description:</label>
-    <textarea id="description" name="description" [(ngModel)]="newProgram.description"></textarea>
+    <textarea id="description" name="description" [(ngModel)]="newProgram.description" maxlength="500"></textarea>
+    <div *ngIf="formErrors.description" class="error">{{ formErrors.description }}</div>
 
     <label for="start_date">Start Date:</label>
     <input id="start_date" name="start_date" type="date" [(ngModel)]="newProgram.start_date" required>
+    <div *ngIf="formErrors.start_date" class="error">{{ formErrors.start_date }}</div>
 
     <label for="end_date">End Date:</label>
     <input id="end_date" name="end_date" type="date" [(ngModel)]="newProgram.end_date" required>
+    <div *ngIf="formErrors.end_date" class="error">{{ formErrors.end_date }}</div>
+
     <div class="form-buttons">
-    <button type="submit">Create Program</button>
-    <button type="button" (click)="toggleForm('program')">Cancel</button>
+      <button type="submit">Create Program</button>
+      <button type="button" (click)="toggleForm('program')">Cancel</button>
     </div>
   </form>
 
@@ -36,77 +42,91 @@
     <h3>Assign Program</h3>
     <label for="assign_program_id">Program ID:</label>
     <input id="assign_program_id" name="assign_program_id" [(ngModel)]="assignProgram.program_id" required>
+    <div *ngIf="formErrors.assign_program_id" class="error">{{ formErrors.assign_program_id }}</div>
 
-    <label for="company_id">Company ID:</label>
+    <label for="company_id">TE ID:</label>
     <input id="company_id" name="company_id" [(ngModel)]="assignProgram.company_id" required>
+    <div *ngIf="formErrors.company_id" class="error">{{ formErrors.company_id }}</div>
 
     <label for="area_of_expertise">Area of Expertise:</label>
     <input id="area_of_expertise" name="area_of_expertise" [(ngModel)]="assignProgram.area_of_expertise" required>
+    <div *ngIf="formErrors.area_of_expertise" class="error">{{ formErrors.area_of_expertise }}</div>
 
     <label for="sme_status">SME Status:</label>
     <select id="sme_status" name="sme_status" [(ngModel)]="assignProgram.sme_status" required>
       <option value="Yes">Yes</option>
       <option value="No">No</option>
     </select>
+    <div *ngIf="formErrors.sme_status" class="error">{{ formErrors.sme_status }}</div>
+
     <div class="form-buttons">
-    <button type="submit">Assign Program</button>
-    <button type="button" (click)="toggleForm('assign')">Cancel</button>
+      <button type="submit">Assign Program</button>
+      <button type="button" (click)="toggleForm('assign')">Cancel</button>
     </div>
   </form>
 
   <!-- Create Employee Form -->
   <form *ngIf="showCreateEmployee" (ngSubmit)="onCreateEmployeeSubmit()">
     <h3>Create Employee</h3>
-    <label for="employee_company_id">Company ID:</label>
+    <label for="employee_company_id">TE ID:</label>
     <input id="employee_company_id" name="employee_company_id" [(ngModel)]="newEmployee.company_id" required>
+    <div *ngIf="formErrors.employee_company_id" class="error">{{ formErrors.employee_company_id }}</div>
 
     <label for="first_name">First Name:</label>
-    <input id="first_name" name="first_name" [(ngModel)]="newEmployee.first_name" required>
+    <input id="first_name" name="first_name" [(ngModel)]="newEmployee.first_name" required minlength="2">
+    <div *ngIf="formErrors.first_name" class="error">{{ formErrors.first_name }}</div>
 
     <label for="last_name">Last Name:</label>
-    <input id="last_name" name="last_name" [(ngModel)]="newEmployee.last_name" required>
+    <input id="last_name" name="last_name" [(ngModel)]="newEmployee.last_name" required minlength="2">
+    <div *ngIf="formErrors.last_name" class="error">{{ formErrors.last_name }}</div>
 
     <label for="email">Email:</label>
     <input id="email" name="email" type="email" [(ngModel)]="newEmployee.email" required>
+    <div *ngIf="formErrors.email" class="error">{{ formErrors.email }}</div>
 
     <label for="phone_number">Phone Number:</label>
-    <input id="phone_number" name="phone_number" [(ngModel)]="newEmployee.phone_number" required>
+    <input id="phone_number" name="phone_number" [(ngModel)]="newEmployee.phone_number" required pattern="[0-9]{10}">
+    <div *ngIf="formErrors.phone_number" class="error">{{ formErrors.phone_number }}</div>
 
     <label for="date_of_joining">Date of Joining:</label>
     <input id="date_of_joining" name="date_of_joining" type="date" [(ngModel)]="newEmployee.date_of_joining" required>
+    <div *ngIf="formErrors.date_of_joining" class="error">{{ formErrors.date_of_joining }}</div>
 
     <label for="manager_id">Manager ID:</label>
     <input id="manager_id" name="manager_id" [(ngModel)]="newEmployee.manager_id" required>
-    
-    <div class="form-buttons">
-    <button type="submit">Create Employee</button>
-    <button type="button" (click)="toggleForm('employee')">Cancel</button>
-    </div>
+    <div *ngIf="formErrors.manager_id" class="error">{{ formErrors.manager_id }}</div>
 
+    <div class="form-buttons">
+      <button type="submit">Create Employee</button>
+      <button type="button" (click)="toggleForm('employee')">Cancel</button>
+    </div>
   </form>
 
   <!-- Modify Employee Program Form -->
-<form *ngIf="showModifyEmployeeProgram" (ngSubmit)="onModifyEmployeeProgramSubmit()">
-  <h3>Modify Employee Program</h3>
-  
-  <label for="modify_company_id">Company ID:</label>
-  <input id="modify_company_id" name="modify_company_id" [(ngModel)]="modifyEmployeeProgramData.company_id" required>
+  <form *ngIf="showModifyEmployeeProgram" (ngSubmit)="onModifyEmployeeProgramSubmit()">
+    <h3>Modify Employee Program</h3>
+    <label for="modify_company_id">TE ID:</label>
+    <input id="modify_company_id" name="modify_company_id" [(ngModel)]="modifyEmployeeProgramData.company_id" required>
+    <div *ngIf="formErrors.modify_company_id" class="error">{{ formErrors.modify_company_id }}</div>
 
-  <label for="modify_program_id">Program ID:</label>
-  <input id="modify_program_id" name="modify_program_id" [(ngModel)]="modifyEmployeeProgramData.program_id" required>
+    <label for="modify_program_id">Program ID:</label>
+    <input id="modify_program_id" name="modify_program_id" [(ngModel)]="modifyEmployeeProgramData.program_id" required>
+    <div *ngIf="formErrors.modify_program_id" class="error">{{ formErrors.modify_program_id }}</div>
 
-  <label for="modify_area_of_expertise">Area of Expertise:</label>
-  <input id="modify_area_of_expertise" name="modify_area_of_expertise" [(ngModel)]="modifyEmployeeProgramData.area_of_expertise" required>
+    <label for="modify_area_of_expertise">Area of Expertise:</label>
+    <input id="modify_area_of_expertise" name="modify_area_of_expertise" [(ngModel)]="modifyEmployeeProgramData.area_of_expertise" required>
+    <div *ngIf="formErrors.modify_area_of_expertise" class="error">{{ formErrors.modify_area_of_expertise }}</div>
 
-  <label for="modify_sme_status">SME Status:</label>
-  <select id="modify_sme_status" name="modify_sme_status" [(ngModel)]="modifyEmployeeProgramData.sme_status" required>
-    <option value="Yes">Yes</option>
-    <option value="No">No</option>
-  </select>
+    <label for="modify_sme_status">SME Status:</label>
+    <select id="modify_sme_status" name="modify_sme_status" [(ngModel)]="modifyEmployeeProgramData.sme_status" required>
+      <option value="Yes">Yes</option>
+      <option value="No">No</option>
+    </select>
+    <div *ngIf="formErrors.modify_sme_status" class="error">{{ formErrors.modify_sme_status }}</div>
 
-  <div class="form-buttons">
-    <button type="submit">Modify Employee Program</button>
-    <button type="button" (click)="toggleForm('modify')">Cancel</button>
-  </div>
-</form>
+    <div class="form-buttons">
+      <button type="submit">Modify Employee Program</button>
+      <button type="button" (click)="toggleForm('modify')">Cancel</button>
+    </div>
+  </form>
 </div>

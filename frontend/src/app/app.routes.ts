@@ -3,7 +3,7 @@ import { EmployeeListComponent } from './components/employee-list/employee-list.
 import { EmployeeDetailsComponent } from './components/employee-details/employee-details.component';
 import { AddEmployeeProgramComponent } from './components/add-employee-program/add-employee-program.component';
 import { ModifyEmployeeComponent } from './components/modify-employee/modify-employee.component';
- // Import your search component
+
 
 export const routes: Routes = [
   { path: 'employees', component: EmployeeListComponent },

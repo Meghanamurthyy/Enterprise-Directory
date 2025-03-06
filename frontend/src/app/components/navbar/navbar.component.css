@@ -10,11 +10,11 @@
   margin: 20px auto;
 }
 
-/* Logo and Portal Title */
+
 .navbar-left {
   display: flex;
   align-items: center;
-  gap: 15px; /* Space between logo and text */
+  gap: 15px; 
 }
 
 .navbar-left .logo {

@@ -57,15 +57,15 @@ textarea {
 /* Button Styling */
 .button-group {
   display: flex;
-  /* flex-direction: ; Vertical layout */
-  align-items: center; /* Center align buttons */
-  gap: 20px; /* Space between buttons */
+  
+  align-items: center; 
+  gap: 20px; 
   justify-content: center;
 
 }
 
 .button-group button{
-  min-width: 180px; /* Ensures all buttons have equal width */
+  min-width: 180px; 
   text-align: center;
   height: 60px;
 }
@@ -82,8 +82,8 @@ button {
   cursor: pointer;
   transition: all 0.3s ease-in-out;
   box-shadow: 0px 4px 8px rgba(239, 150, 9, 0.3);
-  width: 80%; /* Make buttons uniform width */
-  max-width: 250px; /* Prevent overly wide buttons */
+  width: 80%; 
+  max-width: 250px; 
   text-align: center;
   
 }
@@ -101,21 +101,21 @@ button:active {
   box-shadow: 0px 2px 6px rgba(239, 150, 9, 0.3);
 }
 
-/* Group form buttons and space them */
+
 .form-buttons {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
   gap: 15px;
-  margin-top: 20px; /* Adds gap above buttons */
+  margin-top: 20px; 
 }
 
 .form-buttons button {
-  width: auto; /* Avoid forcing unnecessary width */
+  width: auto; 
   max-width: 450px;
   min-width: 300px;
-  padding: 10px 20px; /* Consistent padding */
+  padding: 10px 20px; 
 }
 
 /* Responsive Design */
@@ -125,7 +125,7 @@ button:active {
   }
 
   .button-group {
-    gap: 10px; /* Reduce space on smaller screens */
+    gap: 10px; 
   }
 
   input, textarea, select, button {

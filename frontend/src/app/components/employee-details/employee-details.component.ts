@@ -201,9 +201,9 @@ export class EmployeeDetailsComponent implements OnInit {
 
   ngOnInit(): void {
 // <<<<<<< HEAD
-    const company_id = this.route.snapshot.paramMap.get('company_id'); // Use company_id instead of id
+    const company_id = this.route.snapshot.paramMap.get('company_id'); 
     if (company_id) {
-      // Fetch employee details by company_id
+      
       this.employeeService.getEmployeeById(company_id).subscribe({
         next: (data) => {
           console.log("Fetched Employee Data:", JSON.stringify(data, null, 2));
@@ -211,7 +211,7 @@ export class EmployeeDetailsComponent implements OnInit {
           if (data) {
             this.employee = data;
 
-            // Use type assertion to bypass TypeScript errors
+            
             const employeeData: any = data;
             if (this.employee) {
               this.employee.program_name = employeeData.programs?.map((p: any) => p.program_name).join(', ') || 'N/A';
@@ -221,12 +221,12 @@ export class EmployeeDetailsComponent implements OnInit {
             }
           } else {
             console.error("No employee data found!");
-            this.router.navigate(['/employees']); // Redirect to employee list if no data is found
+            this.router.navigate(['/employees']); 
           }
         },
         error: (error) => {
           console.error("Error fetching employee details:", error);
-          this.router.navigate(['/employees']); // Redirect to employee list on error
+          this.router.navigate(['/employees']); 
         },
       });
 
@@ -283,7 +283,7 @@ export class EmployeeDetailsComponent implements OnInit {
       });
     } else {
       console.error("No company_id found in route!");
-      this.router.navigate(['/employees']); // Redirect to employee list if no company_id is found
+      this.router.navigate(['/employees']); 
     }
   }
 
@@ -291,11 +291,11 @@ export class EmployeeDetailsComponent implements OnInit {
     const employeeId = id || this.employee?.company_id;
 
     if (!employeeId) {
-      console.error("Modify button clicked, but no valid employee ID found!", this.employee);
+      console.error("Modify button clicked, but no valid TE ID found!", this.employee);
       return;
     }
 
-    console.log("Navigating to Modify Page for Employee ID:", employeeId);
+    console.log("Navigating to Modify Page for TE ID:", employeeId);
     this.router.navigate(['/modify-employee', employeeId]);
   }
 

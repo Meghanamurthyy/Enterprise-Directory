@@ -13,7 +13,7 @@ export class NavbarComponent {
 
   constructor(private router: Router) {}
 
-  // Handle search
+  
   onSearch(): void {
     if (this.searchQuery.trim()) {
       
