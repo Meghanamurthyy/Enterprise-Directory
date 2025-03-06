@@ -10,23 +10,33 @@
   margin: 20px auto;
 }
 
-/* .navbar-left .logo {
-  height: auto;
-  width: auto;
-  transition: transform 0.3s ease-in-out;
-} */
-
-.navbar-left .logo {
-  height: 50px;  
-  width: auto;
-  max-width: 120px; 
+/* Logo and Portal Title */
+.navbar-left {
+  display: flex;
+  align-items: center;
+  gap: 15px; /* Space between logo and text */
 }
 
+.navbar-left .logo {
+  height: 50px;
+  width: auto;
+  max-width: 120px;
+  transition: transform 0.3s ease-in-out;
+}
 
 .navbar-left .logo:hover {
   transform: scale(1.05);
 }
 
+.portal-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #fff;
+  font-family: 'Arial', sans-serif;
+  white-space: nowrap;
+}
+
+/* Search Input */
 .navbar-right input {
   width: 280px;
   padding: 12px;
@@ -42,6 +52,7 @@
   box-shadow: 0px 0px 10px rgb(250, 151, 3);
 }
 
+/* Responsive Design */
 @media (max-width: 768px) {
   .navbar {
     flex-direction: column;
@@ -51,5 +62,9 @@
 
   .navbar-right input {
     width: 100%;
+  }
+  
+  .portal-title {
+    font-size: 1.2rem;
   }
 }
